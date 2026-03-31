@@ -14,7 +14,7 @@
   --color-border:          #222222;
   --color-burgundy:        #3D1018;
 
-  --font-sans:            var(--font-sans);
+  --font-sans:            var(--font-geist-sans);
   --font-mono:     var(--font-geist-mono);
   --font-display:  var(--font-cormorant);
   --font-heading:            var(--font-sans);
