@@ -5,21 +5,21 @@
 See: .planning/PROJECT.md (updated 2026-03-31)
 
 **Core value:** Clients land on the site and immediately feel the luxury, dark aesthetic — and book a session.
-**Current focus:** Phase 2: Schema + Data Layer
+**Current focus:** Phase 4: Navigation
 
 ## Current Position
 
-Phase: 2 of 10 (Schema + Data Layer)
-Plan: 0 of 2 in current phase
+Phase: 4 of 10 (Navigation)
+Plan: 0 of 1 in current phase
 Status: Ready to plan
-Last activity: 2026-03-31 — Phase 1 complete (design system, schemas, lib path, domMax, useCache, cn())
+Last activity: 2026-03-31 — Phase 3 complete (PageTransition + layout integration)
 
-Progress: [█░░░░░░░░░] 10%
+Progress: [███░░░░░░░] 30%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 1
+- Total plans completed: 2
 - Average duration: —
 - Total execution time: —
 
@@ -28,6 +28,8 @@ Progress: [█░░░░░░░░░] 10%
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 1. Design System | 1/1 | — | — |
+| 2. Schema + Data Layer | 1/1 | — | — |
+| 3. Page Transitions | 1/1 | — | — |
 
 ## Accumulated Context
 
@@ -51,5 +53,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-31
-Stopped at: Phase 1 complete — 6 commits on master, build passes clean
+Stopped at: Phase 3 complete — PageTransition.tsx + layout integration, build passes clean
 Resume file: None
