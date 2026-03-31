@@ -3,15 +3,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { m, useReducedMotion } from 'framer-motion'
+import { staticVariants } from '@/lib/motion'
 
 const variants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.7 } },
-}
-
-const staticVariants = {
-  hidden: { opacity: 1, y: 0 },
-  visible: { opacity: 1, y: 0 },
 }
 
 export default function AboutSnippet() {
@@ -40,23 +36,23 @@ export default function AboutSnippet() {
 
         {/* Right: text */}
         <div className="flex flex-col gap-6">
-          <p className="text-xs uppercase tracking-widest text-muted">About</p>
+          <p className="text-xs uppercase tracking-widest text-text-secondary">About</p>
 
-          <h2 className="font-light text-accent text-3xl md:text-4xl leading-snug">
+          <h2 className="font-light text-text-primary text-3xl md:text-4xl leading-snug">
             Eye for the quiet moment
           </h2>
 
-          <p className="text-muted leading-relaxed">
+          <p className="text-text-secondary leading-relaxed">
             Based in Vancouver, BC, I work across automotive, landscape, and street photography — drawn to the details that hold still long enough to mean something. Every frame starts with light and ends with patience.
           </p>
 
-          <p className="text-muted leading-relaxed">
+          <p className="text-text-secondary leading-relaxed">
             When I&apos;m not chasing golden hour on the Sea-to-Sky, I&apos;m in the city looking for geometry in glass and concrete. The camera changes what you notice — that&apos;s the whole point.
           </p>
 
           <Link
             href="/gallery"
-            className="self-start text-sm text-accent tracking-wide hover:text-muted transition-colors duration-200"
+            className="self-start text-sm text-text-primary tracking-wide hover:text-text-secondary transition-colors duration-200"
           >
             View Gallery →
           </Link>

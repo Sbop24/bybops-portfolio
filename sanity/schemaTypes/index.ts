@@ -6,12 +6,14 @@ import { gearItem } from './objects/gearItem'
 import { gearCategoryGroup } from './objects/gearCategoryGroup'
 
 // Documents
+import { photo } from './documents/photo'
 import { workProject } from './documents/workProject'
-import { galleryImage } from './documents/galleryImage'
+import { shopItem } from './documents/shopItem'
 
 // Singletons
 import { featuredWorkSection } from './singletons/featuredWorkSection'
 import { masonryGallery } from './singletons/masonryGallery'
+import { about } from './singletons/about'
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   // Objects
@@ -19,9 +21,11 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   gearItem,
   gearCategoryGroup,
   // Documents
+  photo,
   workProject,
-  galleryImage,
+  shopItem,
   // Singletons
   featuredWorkSection,
   masonryGallery,
+  about,
 ]

@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { m, useReducedMotion } from 'framer-motion'
+import { staticVariants } from '@/lib/motion'
 
 const HERO_IMAGE = 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1800'
 
@@ -18,11 +19,6 @@ const headingVariants = {
 const arrowVariants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { duration: 0.8, delay: 1.2 } },
-}
-
-const staticVariants = {
-  hidden: { opacity: 1, y: 0 },
-  visible: { opacity: 1, y: 0 },
 }
 
 export default function HeroSection() {
@@ -52,7 +48,7 @@ export default function HeroSection() {
           variants={label}
           initial="hidden"
           animate="visible"
-          className="mb-6 text-xs uppercase tracking-widest text-muted"
+          className="mb-6 text-xs uppercase tracking-widest text-text-secondary"
         >
           Photography by Sahib Boparai
         </m.p>
@@ -61,7 +57,7 @@ export default function HeroSection() {
           variants={heading}
           initial="hidden"
           animate="visible"
-          className="font-light text-accent text-5xl md:text-7xl lg:text-8xl leading-none"
+          className="font-light text-text-primary text-5xl md:text-7xl lg:text-8xl leading-none"
         >
           Moments
           <br />
@@ -84,7 +80,7 @@ export default function HeroSection() {
           fill="none"
           stroke="currentColor"
           strokeWidth="1.5"
-          className="text-muted"
+          className="text-text-secondary"
         >
           <path d="M12 5v14M5 12l7 7 7-7" />
         </svg>

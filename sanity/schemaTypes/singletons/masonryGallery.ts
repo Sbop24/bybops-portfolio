@@ -15,7 +15,7 @@ export const masonryGallery = defineType({
       of: [
         defineArrayMember({
           type: 'reference',
-          to: [{ type: 'galleryImage' }],
+          to: [{ type: 'photo' }],
         }),
       ],
     }),
