@@ -9,8 +9,8 @@ Ten-phase build of a dark-luxury photography portfolio. Starts with design syste
 - [x] **Phase 1: Design System + Infrastructure** - Tailwind tokens, Cormorant font, domMax, useCache, cn(), lib path, schema prep
 - [x] **Phase 2: Schema + Data Layer** - sanity.config.ts singleton structure, queries.ts rewrite, /studio route
 - [x] **Phase 3: Page Transitions** - AnimatePresence fade between routes
-- [ ] **Phase 4: Navigation** - Transparent-to-solid fixed nav via 21st.dev component
-- [ ] **Phase 5: Home Page Completion** - CarAnimation, BookingCTA, wire Sanity data to FeaturedWork
+- [x] **Phase 4: Navigation** - Transparent-to-solid fixed nav via 21st.dev component
+- [x] **Phase 5: Home Page Completion** - CarAnimation, BookingCTA, wire Sanity data to FeaturedWork
 - [ ] **Phase 6: Gallery Page** - Category rows + slide-in drawer
 - [ ] **Phase 7: About Page** - Editorial two-column layout with PortableText
 - [ ] **Phase 8: Booking Page** - Calendly embed
@@ -184,8 +184,8 @@ Phases execute in order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 1
 | 1. Design System + Infrastructure | 1/1 | Complete | 2026-03-31 |
 | 2. Schema + Data Layer | 1/1 | Complete | 2026-03-31 |
 | 3. Page Transitions | 1/1 | Complete | 2026-03-31 |
-| 4. Navigation | 0/1 | Not started | - |
-| 5. Home Page Completion | 0/1 | Not started | - |
+| 4. Navigation | 1/1 | Complete | 2026-03-31 |
+| 5. Home Page Completion | 1/1 | Complete | 2026-03-31 |
 | 6. Gallery Page | 0/1 | Not started | - |
 | 7. About Page | 0/1 | Not started | - |
 | 8. Booking Page | 0/1 | Not started | - |

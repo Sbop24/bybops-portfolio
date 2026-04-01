@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-03-31)
 
 **Core value:** Clients land on the site and immediately feel the luxury, dark aesthetic — and book a session.
-**Current focus:** Phase 4: Navigation
+**Current focus:** Phase 6: Gallery Page
 
 ## Current Position
 
-Phase: 4 of 10 (Navigation)
+Phase: 6 of 10 (Gallery Page)
 Plan: 0 of 1 in current phase
 Status: Ready to plan
-Last activity: 2026-03-31 — Phase 3 complete (PageTransition + layout integration)
+Last activity: 2026-03-31 — Phase 5 complete (CarAnimation, BookingCTA, Sanity data wiring)
 
-Progress: [███░░░░░░░] 30%
+Progress: [█████░░░░░] 50%
 
 ## Performance Metrics
 
@@ -30,6 +30,8 @@ Progress: [███░░░░░░░] 30%
 | 1. Design System | 1/1 | — | — |
 | 2. Schema + Data Layer | 1/1 | — | — |
 | 3. Page Transitions | 1/1 | — | — |
+| 4. Navigation | 1/1 | — | — |
+| 5. Home Page Completion | 1/1 | — | — |
 
 ## Accumulated Context
 
@@ -47,11 +49,11 @@ None.
 
 ### Blockers/Concerns
 
-- shadcn init must run before Phase 4 nav install (not a blocker yet)
+- shadcn init complete (Phase 4) — button.tsx, components.json, tw-animate-css added
 - NEXT_PUBLIC_CALENDLY_URL must be set in .env.local before Phase 8
 
 ## Session Continuity
 
 Last session: 2026-03-31
-Stopped at: Phase 3 complete — PageTransition.tsx + layout integration, build passes clean
+Stopped at: Phase 5 complete — CarAnimation, BookingCTA, Sanity wiring, build passes clean
 Resume file: None
