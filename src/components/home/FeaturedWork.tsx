@@ -1,26 +1,13 @@
 'use client'
 
 import { useRef } from 'react'
-import Link from 'next/link'
 import Image from 'next/image'
 import { m, useReducedMotion } from 'framer-motion'
 import { staticVariants } from '@/lib/motion'
-
-interface CoverImage {
-  alt: string
-  image: { asset: { url: string } }
-}
-
-interface Project {
-  _id: string
-  title: string
-  slug: { current: string }
-  summary: string
-  coverImage: CoverImage
-}
+import type { Photo } from '@/lib/sanity/queries'
 
 interface FeaturedWorkProps {
-  projects: Project[]
+  photos: Photo[]
 }
 
 const containerVariants = {
@@ -35,7 +22,7 @@ const cardVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 }
 
-export default function FeaturedWork({ projects }: FeaturedWorkProps) {
+export default function FeaturedWork({ photos }: FeaturedWorkProps) {
   const dragRef = useRef<HTMLDivElement>(null)
   const prefersReduced = useReducedMotion()
 
@@ -58,33 +45,32 @@ export default function FeaturedWork({ projects }: FeaturedWorkProps) {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          {projects.map((project) => (
-            <Link key={project._id} href={`/projects/${project.slug.current}`}>
-              <m.div
-                variants={card}
-                whileHover={prefersReduced ? {} : { scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-                className="relative w-72 md:w-96 shrink-0 overflow-hidden rounded-sm aspect-[3/4]"
-              >
-                <Image
-                  src={project.coverImage.image.asset.url}
-                  alt={project.coverImage.alt}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 288px, 384px"
-                  draggable={false}
-                />
+          {photos.map((photo) => (
+            <m.div
+              key={photo._id}
+              variants={card}
+              whileHover={prefersReduced ? {} : { scale: 1.02 }}
+              transition={{ duration: 0.3 }}
+              className="relative w-72 md:w-96 shrink-0 overflow-hidden rounded-sm aspect-[3/4]"
+            >
+              <Image
+                src={photo.image.asset.url ?? ''}
+                alt={photo.altText}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 288px, 384px"
+                draggable={false}
+              />
 
-                {/* Bottom gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+              {/* Bottom gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
 
-                {/* Card text */}
-                <div className="absolute bottom-0 left-0 right-0 p-5">
-                  <h3 className="text-text-primary font-light text-xl mb-1">{project.title}</h3>
-                  <p className="text-text-secondary text-sm leading-snug line-clamp-2">{project.summary}</p>
-                </div>
-              </m.div>
-            </Link>
+              {/* Card text */}
+              <div className="absolute bottom-0 left-0 right-0 p-5">
+                <h3 className="text-text-primary font-light text-xl mb-1">{photo.title}</h3>
+                <p className="text-text-secondary text-sm leading-snug">{photo.category}</p>
+              </div>
+            </m.div>
           ))}
         </m.div>
       </div>
