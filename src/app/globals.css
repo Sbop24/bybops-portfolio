@@ -57,6 +57,14 @@
   --radius-4xl:            calc(var(--radius) * 2.6);
 }
 
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 .grain-overlay {
   position: relative;
 }
