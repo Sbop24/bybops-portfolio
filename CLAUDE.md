@@ -137,3 +137,6 @@ sanity/
 | 2026-03-28 | CLAUDE.md created. Covers Next.js App Router, Sanity v3, Framer Motion, image handling, Tailwind, Git, and file structure. |
 | 2026-03-31 | Stack corrected to Next.js 16.2.1, Tailwind v4, Sanity v5. Phase 1 fixes applied: domMax, useCache, lib path moved, gold tokens, Cormorant font, cn() utility, photo/about/shopItem schemas. Build passes. |
 | 2026-03-31 | Framer Motion rule updated: use domMax (not domAnimation). lib/sanity now at src/lib/sanity/ — use @/ alias. |
+| 2026-03-31 | Phases 3-5 complete: page transitions, navigation, home page. shadcn initialized. Nav built from scratch (21st.dev unavailable). shadcn overwrites --font-sans — fix after init. |
+| 2026-03-31 | Phase 6 complete: gallery page with 4 category rows, slide-in drawer (spring animation), loading/error boundaries. scrollbar-hide utility added. Placeholder gallery data (12 photos). |
+| 2026-03-31 | Phase 7 complete: about page with two-column editorial layout (sticky image left, PortableText right), scroll-triggered reveals, fallback lorem ipsum. PortableTextBlock cast needed for type safety. |

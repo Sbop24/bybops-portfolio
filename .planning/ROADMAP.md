@@ -11,8 +11,8 @@ Ten-phase build of a dark-luxury photography portfolio. Starts with design syste
 - [x] **Phase 3: Page Transitions** - AnimatePresence fade between routes
 - [x] **Phase 4: Navigation** - Transparent-to-solid fixed nav via 21st.dev component
 - [x] **Phase 5: Home Page Completion** - CarAnimation, BookingCTA, wire Sanity data to FeaturedWork
-- [ ] **Phase 6: Gallery Page** - Category rows + slide-in drawer
-- [ ] **Phase 7: About Page** - Editorial two-column layout with PortableText
+- [x] **Phase 6: Gallery Page** - Category rows + slide-in drawer
+- [x] **Phase 7: About Page** - Editorial two-column layout with PortableText
 - [ ] **Phase 8: Booking Page** - Calendly embed
 - [ ] **Phase 9: Shop Page (Hidden)** - Product grid via 21st.dev card, hidden from nav
 - [ ] **Phase 10: Final Build + Full Verification** - Production build, all pages verified, mobile check
@@ -186,8 +186,8 @@ Phases execute in order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 1
 | 3. Page Transitions | 1/1 | Complete | 2026-03-31 |
 | 4. Navigation | 1/1 | Complete | 2026-03-31 |
 | 5. Home Page Completion | 1/1 | Complete | 2026-03-31 |
-| 6. Gallery Page | 0/1 | Not started | - |
-| 7. About Page | 0/1 | Not started | - |
+| 6. Gallery Page | 1/1 | Complete | 2026-03-31 |
+| 7. About Page | 1/1 | Complete | 2026-03-31 |
 | 8. Booking Page | 0/1 | Not started | - |
 | 9. Shop Page (Hidden) | 0/1 | Not started | - |
 | 10. Final Build + Full Verification | 0/1 | Not started | - |
