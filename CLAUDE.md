@@ -140,3 +140,5 @@ sanity/
 | 2026-03-31 | Phases 3-5 complete: page transitions, navigation, home page. shadcn initialized. Nav built from scratch (21st.dev unavailable). shadcn overwrites --font-sans — fix after init. |
 | 2026-03-31 | Phase 6 complete: gallery page with 4 category rows, slide-in drawer (spring animation), loading/error boundaries. scrollbar-hide utility added. Placeholder gallery data (12 photos). |
 | 2026-03-31 | Phase 7 complete: about page with two-column editorial layout (sticky image left, PortableText right), scroll-triggered reveals, fallback lorem ipsum. PortableTextBlock cast needed for type safety. |
+| 2026-04-01 | Phase 8 complete: booking page with Calendly iframe embed. Placeholder fallback when NEXT_PUBLIC_CALENDLY_URL not set. |
+| 2026-04-01 | Phase 9 complete: hidden shop page with ProductCard, ShopClient (All/Presets/Prints filter tabs), staggered grid animation, sold-out overlay. robots noindex set. |
