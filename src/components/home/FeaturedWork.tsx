@@ -30,7 +30,7 @@ export default function FeaturedWork({ photos }: FeaturedWorkProps) {
   const card = prefersReduced ? staticVariants : cardVariants
 
   return (
-    <section className="py-20 px-6 md:px-12">
+    <section id="featured-work" className="py-20 px-6 md:px-12">
       <p className="mb-10 text-xs uppercase tracking-widest text-text-primary">Selected Work</p>
 
       {/* Drag-to-scroll row */}
@@ -49,21 +49,24 @@ export default function FeaturedWork({ photos }: FeaturedWorkProps) {
             <m.div
               key={photo._id}
               variants={card}
-              whileHover={prefersReduced ? {} : { scale: 1.02 }}
+              whileHover={prefersReduced ? {} : { boxShadow: '0 20px 40px rgba(200,164,78,0.12)' }}
               transition={{ duration: 0.3 }}
-              className="relative w-72 md:w-96 shrink-0 overflow-hidden rounded-sm aspect-[3/4]"
+              className="group relative w-72 md:w-96 shrink-0 overflow-hidden rounded-sm aspect-[3/4]"
             >
               <Image
                 src={photo.image.asset.url ?? ''}
                 alt={photo.altText}
                 fill
-                className="object-cover"
+                className="object-cover motion-safe:transition-transform motion-safe:duration-400 motion-safe:ease-out motion-safe:group-hover:scale-105"
                 sizes="(max-width: 768px) 288px, 384px"
                 draggable={false}
               />
 
               {/* Bottom gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+
+              {/* Gold gradient overlay on hover */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[rgba(200,164,78,0.15)] to-transparent opacity-0 motion-safe:transition-opacity motion-safe:duration-400 motion-safe:group-hover:opacity-100 pointer-events-none" />
 
               {/* Card text */}
               <div className="absolute bottom-0 left-0 right-0 p-5">

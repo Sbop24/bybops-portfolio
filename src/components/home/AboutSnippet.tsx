@@ -15,13 +15,13 @@ export default function AboutSnippet() {
   const v = prefersReduced ? staticVariants : variants
 
   return (
-    <section className="py-24 px-6 md:px-12">
+    <section className="py-14 px-6 md:px-12">
       <m.div
         variants={v}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center"
+        className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center"
       >
         {/* Left: portrait image */}
         <div className="relative w-full aspect-[3/4] overflow-hidden rounded-sm">
@@ -35,18 +35,18 @@ export default function AboutSnippet() {
         </div>
 
         {/* Right: text */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-4">
           <p className="text-xs uppercase tracking-widest text-text-secondary">About</p>
 
-          <h2 className="font-light text-text-primary text-3xl md:text-4xl leading-snug">
+          <h2 className="font-light text-text-primary text-2xl md:text-3xl leading-snug">
             Eye for the quiet moment
           </h2>
 
-          <p className="text-text-secondary leading-relaxed">
+          <p className="text-sm text-text-secondary leading-relaxed">
             Based in Vancouver, BC, I work across automotive, landscape, and street photography — drawn to the details that hold still long enough to mean something. Every frame starts with light and ends with patience.
           </p>
 
-          <p className="text-text-secondary leading-relaxed">
+          <p className="text-sm text-text-secondary leading-relaxed">
             When I&apos;m not chasing golden hour on the Sea-to-Sky, I&apos;m in the city looking for geometry in glass and concrete. The camera changes what you notice — that&apos;s the whole point.
           </p>
 

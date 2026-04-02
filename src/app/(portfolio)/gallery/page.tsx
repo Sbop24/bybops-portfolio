@@ -16,7 +16,7 @@ export default async function GalleryPage() {
         Gallery
       </h1>
       <p className="text-text-secondary text-sm mb-16 max-w-md">
-        A curated collection across automotive, portrait, nature, and event photography.
+        A curated collection across cars, couples, nature, and event photography.
       </p>
 
       <GalleryClient photosByCategory={photosByCategory} />

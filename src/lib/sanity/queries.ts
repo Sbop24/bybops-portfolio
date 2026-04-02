@@ -7,7 +7,7 @@ export interface Photo {
   title: string
   slug: string
   image: { asset: { _ref: string; url?: string }; hotspot?: object; crop?: object }
-  category: 'Automotive' | 'Portrait' | 'Nature' | 'Event'
+  category: 'Cars' | 'Couples' | 'Nature' | 'Event'
   altText: string
   featured: boolean
 }
@@ -43,22 +43,22 @@ const PHOTO_FRAGMENT = `
 // --- Placeholder Data ---
 
 const PLACEHOLDER_PHOTOS: Photo[] = [
-  { _id: '1', title: 'Pursuit', slug: 'pursuit', image: { asset: { _ref: '', url: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800' } }, category: 'Automotive', altText: 'Sports car on track', featured: true },
-  { _id: '2', title: 'Iron & Speed', slug: 'iron-and-speed', image: { asset: { _ref: '', url: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800' } }, category: 'Automotive', altText: 'Classic car in profile', featured: true },
+  { _id: '1', title: 'Pursuit', slug: 'pursuit', image: { asset: { _ref: '', url: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800' } }, category: 'Cars', altText: 'Sports car on track', featured: true },
+  { _id: '2', title: 'Iron & Speed', slug: 'iron-and-speed', image: { asset: { _ref: '', url: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800' } }, category: 'Cars', altText: 'Classic car in profile', featured: true },
   { _id: '3', title: 'Wild Light', slug: 'wild-light', image: { asset: { _ref: '', url: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800' } }, category: 'Nature', altText: 'Mountain landscape at dawn', featured: true },
   { _id: '4', title: 'Grid & Glass', slug: 'grid-and-glass', image: { asset: { _ref: '', url: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800' } }, category: 'Event', altText: 'City skyline at night', featured: true },
 ]
 
 const PLACEHOLDER_GALLERY: Record<string, Photo[]> = {
-  Automotive: [
-    { _id: 'p1', title: 'Pursuit', slug: 'pursuit', image: { asset: { _ref: '', url: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800' } }, category: 'Automotive', altText: 'Sports car on track', featured: false },
-    { _id: 'p2', title: 'Iron & Speed', slug: 'iron-and-speed', image: { asset: { _ref: '', url: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800' } }, category: 'Automotive', altText: 'Classic car in profile', featured: false },
-    { _id: 'p3', title: 'Midnight Run', slug: 'midnight-run', image: { asset: { _ref: '', url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800' } }, category: 'Automotive', altText: 'Car on empty road at night', featured: false },
+  Cars: [
+    { _id: 'p1', title: 'Pursuit', slug: 'pursuit', image: { asset: { _ref: '', url: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800' } }, category: 'Cars', altText: 'Sports car on track', featured: false },
+    { _id: 'p2', title: 'Iron & Speed', slug: 'iron-and-speed', image: { asset: { _ref: '', url: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800' } }, category: 'Cars', altText: 'Classic car in profile', featured: false },
+    { _id: 'p3', title: 'Midnight Run', slug: 'midnight-run', image: { asset: { _ref: '', url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800' } }, category: 'Cars', altText: 'Car on empty road at night', featured: false },
   ],
-  Portrait: [
-    { _id: 'p4', title: 'Stillness', slug: 'stillness', image: { asset: { _ref: '', url: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=800' } }, category: 'Portrait', altText: 'Portrait in natural light', featured: false },
-    { _id: 'p5', title: 'Frame', slug: 'frame', image: { asset: { _ref: '', url: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800' } }, category: 'Portrait', altText: 'Studio portrait', featured: false },
-    { _id: 'p6', title: 'Golden Hour', slug: 'golden-hour', image: { asset: { _ref: '', url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800' } }, category: 'Portrait', altText: 'Portrait at golden hour', featured: false },
+  Couples: [
+    { _id: 'p4', title: 'Stillness', slug: 'stillness', image: { asset: { _ref: '', url: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=800' } }, category: 'Couples', altText: 'Portrait in natural light', featured: false },
+    { _id: 'p5', title: 'Frame', slug: 'frame', image: { asset: { _ref: '', url: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800' } }, category: 'Couples', altText: 'Studio portrait', featured: false },
+    { _id: 'p6', title: 'Golden Hour', slug: 'golden-hour', image: { asset: { _ref: '', url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800' } }, category: 'Couples', altText: 'Portrait at golden hour', featured: false },
   ],
   Nature: [
     { _id: 'p7', title: 'Wild Light', slug: 'wild-light', image: { asset: { _ref: '', url: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800' } }, category: 'Nature', altText: 'Mountain landscape at dawn', featured: false },
@@ -88,8 +88,8 @@ export async function getPhotosByCategory(): Promise<Record<string, Photo[]>> {
   const all = photos ?? []
   if (all.length === 0) return PLACEHOLDER_GALLERY
   return {
-    Automotive: all.filter((p) => p.category === 'Automotive'),
-    Portrait: all.filter((p) => p.category === 'Portrait'),
+    Cars: all.filter((p) => p.category === 'Cars'),
+    Couples: all.filter((p) => p.category === 'Couples'),
     Nature: all.filter((p) => p.category === 'Nature'),
     Event: all.filter((p) => p.category === 'Event'),
   }

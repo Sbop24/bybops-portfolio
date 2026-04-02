@@ -9,7 +9,7 @@ interface GalleryClientProps {
   photosByCategory: Record<string, Photo[]>
 }
 
-const CATEGORIES = ['Automotive', 'Portrait', 'Nature', 'Event'] as const
+const CATEGORIES = ['Cars', 'Couples', 'Nature', 'Event'] as const
 
 export default function GalleryClient({ photosByCategory }: GalleryClientProps) {
   const [activeCategory, setActiveCategory] = useState<string | null>(null)

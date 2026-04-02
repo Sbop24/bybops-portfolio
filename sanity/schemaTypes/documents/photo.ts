@@ -29,7 +29,7 @@ export const photo = defineType({
       name: 'category',
       title: 'Category',
       type: 'string',
-      options: { list: ['Automotive', 'Portrait', 'Nature', 'Event'], layout: 'radio' },
+      options: { list: ['Cars', 'Couples', 'Nature', 'Event'], layout: 'radio' },
       validation: (Rule) => Rule.required(),
     }),
     defineField({

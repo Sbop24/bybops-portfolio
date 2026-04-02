@@ -23,14 +23,21 @@ export default function Nav() {
   })
 
   const solid = !isHome || scrolled
-  const navBg = solid ? 'bg-base/95 backdrop-blur-md' : 'bg-transparent'
+  const navBg = solid ? 'bg-base/95 backdrop-blur-md border-b border-border' : 'bg-transparent'
 
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${navBg}`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Link href="/" className="font-display text-xl text-text-primary">
+        <Link
+          href="/"
+          className="font-display text-xl text-text-primary"
+          onClick={() => {
+            setMenuOpen(false)
+            if (isHome) window.scrollTo({ top: 0, behavior: 'smooth' })
+          }}
+        >
           ByBops
         </Link>
 

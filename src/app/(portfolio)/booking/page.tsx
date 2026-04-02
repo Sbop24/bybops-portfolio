@@ -13,7 +13,7 @@ export default function BookingPage() {
         Book a Session
       </h1>
       <p className="text-text-secondary text-sm mb-12 max-w-md">
-        Pick a time that works for you. Automotive, portrait, event — let&apos;s make it happen.
+        Pick a time that works for you. Cars, couples, event — let&apos;s make it happen.
       </p>
 
       <CalendlyWidget />

@@ -27,6 +27,11 @@ export default function HeroSection() {
   const heading = prefersReduced ? staticVariants : headingVariants
   const arrow = prefersReduced ? staticVariants : arrowVariants
 
+  const scrollToWork = () =>
+    document.getElementById('featured-work')?.scrollIntoView({
+      behavior: prefersReduced ? 'auto' : 'smooth',
+    })
+
   return (
     <section className="relative h-screen w-full overflow-hidden">
       {/* Background image */}
@@ -65,26 +70,36 @@ export default function HeroSection() {
         </m.h1>
       </div>
 
-      {/* Scroll indicator */}
-      <m.div
+      {/* Scroll CTA */}
+      <m.button
         variants={arrow}
         initial="hidden"
         animate="visible"
-        className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2"
-        aria-hidden="true"
+        onClick={scrollToWork}
+        aria-label="Scroll to selected work"
+        className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 flex flex-col items-center gap-1 cursor-pointer"
       >
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          className="text-text-secondary"
+        <m.div
+          animate={prefersReduced ? {} : { y: [0, 8, 0] }}
+          transition={prefersReduced ? {} : { repeat: Infinity, duration: 1.4, ease: 'easeInOut' }}
         >
-          <path d="M12 5v14M5 12l7 7 7-7" />
-        </svg>
-      </m.div>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            className="text-gold"
+          >
+            <path d="M4 7l6 6 6-6" />
+          </svg>
+        </m.div>
+        <span className="text-[10px] uppercase tracking-widest text-text-secondary">
+          Scroll
+        </span>
+      </m.button>
     </section>
   )
 }
