@@ -14,15 +14,15 @@ export default function BookingCTA() {
   const v = prefersReduced ? staticVariants : variants
 
   return (
-    <section className="py-24 px-6 text-center">
+    <section className="py-20 md:py-24 px-6 text-center">
       <m.div
         variants={v}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="flex flex-col items-center gap-8"
+        className="flex flex-col items-center gap-6 md:gap-8"
       >
-        <h2 className="font-display font-light text-text-primary text-3xl md:text-5xl leading-snug">
+        <h2 className="font-display font-light text-text-primary text-2xl sm:text-3xl md:text-5xl leading-snug">
           Let&apos;s create something
           <br />
           worth remembering
@@ -30,7 +30,7 @@ export default function BookingCTA() {
 
         <Link
           href="/booking"
-          className="border border-gold text-gold hover:bg-gold hover:text-base transition-colors duration-300 px-8 py-3 text-sm tracking-widest uppercase"
+          className="border border-gold text-gold hover:bg-gold hover:text-base transition-colors duration-300 px-8 py-3 text-xs md:text-sm tracking-widest uppercase"
         >
           Book a Session
         </Link>

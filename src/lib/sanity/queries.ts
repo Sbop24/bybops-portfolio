@@ -17,6 +17,15 @@ export interface AboutData {
   profileImage: { asset: { _ref: string; url?: string } } | null
 }
 
+export type ParallaxVariant = 'slide-right' | 'slide-left' | 'vertical'
+
+export interface ParallaxStripData {
+  image: { asset: { _ref: string; url?: string } }
+  altText: string
+  variant: ParallaxVariant
+  heightClass: string
+}
+
 export interface ShopItemData {
   _id: string
   title: string
@@ -72,6 +81,27 @@ const PLACEHOLDER_GALLERY: Record<string, Photo[]> = {
   ],
 }
 
+const PLACEHOLDER_PARALLAX_STRIPS: ParallaxStripData[] = [
+  {
+    image: { asset: { _ref: '', url: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=1600' } },
+    altText: 'Bugatti Chiron detail — car photography',
+    variant: 'slide-right',
+    heightClass: 'h-[45vh] md:h-[55vh]',
+  },
+  {
+    image: { asset: { _ref: '', url: 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=1600' } },
+    altText: 'Sports car on an open road',
+    variant: 'slide-left',
+    heightClass: 'h-[32vh] md:h-[40vh]',
+  },
+  {
+    image: { asset: { _ref: '', url: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1600' } },
+    altText: 'Mountain landscape at golden hour',
+    variant: 'vertical',
+    heightClass: 'h-[40vh] md:h-[50vh]',
+  },
+]
+
 // --- Query Functions ---
 
 export async function getFeaturedPhotos(): Promise<Photo[]> {
@@ -99,6 +129,14 @@ export async function getAbout(): Promise<AboutData> {
   'use cache'
   const data = await sanityClient.fetch<AboutData>(`*[_type == "about"][0] { body, profileImage { asset-> } }`)
   return data ?? { body: null, profileImage: null }
+}
+
+export async function getParallaxStrips(): Promise<ParallaxStripData[]> {
+  'use cache'
+  const data = await sanityClient.fetch<ParallaxStripData[]>(
+    `*[_type == "featuredWorkSection"][0] { parallaxStrips[] { image { asset-> { _ref, url } }, altText, variant, heightClass } }.parallaxStrips`
+  )
+  return data ?? PLACEHOLDER_PARALLAX_STRIPS
 }
 
 export async function getShopItems(): Promise<ShopItemData[]> {

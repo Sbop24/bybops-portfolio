@@ -33,14 +33,14 @@ export default function HeroSection() {
     })
 
   return (
-    <section className="relative h-screen w-full overflow-hidden">
+    <section className="relative h-[100svh] w-full overflow-hidden">
       {/* Background image */}
       <Image
         src={HERO_IMAGE}
         alt="Hero background — car photography"
         fill
         priority
-        className="object-cover"
+        className="object-cover object-center"
         sizes="100vw"
       />
 
@@ -53,7 +53,7 @@ export default function HeroSection() {
           variants={label}
           initial="hidden"
           animate="visible"
-          className="mb-6 text-xs uppercase tracking-widest text-text-secondary"
+          className="mb-4 text-[10px] md:mb-6 md:text-xs uppercase tracking-widest text-text-secondary"
         >
           Photography by Sahib Boparai
         </m.p>
@@ -62,7 +62,7 @@ export default function HeroSection() {
           variants={heading}
           initial="hidden"
           animate="visible"
-          className="font-light text-text-primary text-5xl md:text-7xl lg:text-8xl leading-none"
+          className="font-light text-text-primary text-4xl sm:text-5xl md:text-7xl lg:text-8xl leading-none"
         >
           Moments
           <br />

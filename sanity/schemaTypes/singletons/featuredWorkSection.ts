@@ -19,5 +19,49 @@ export const featuredWorkSection = defineType({
         }),
       ],
     }),
+    defineField({
+      name: 'parallaxStrips',
+      title: 'Parallax Strips',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'image',
+              title: 'Image',
+              type: 'image',
+              options: { hotspot: true },
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'altText',
+              title: 'Alt Text',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'variant',
+              title: 'Variant',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'Slide Right', value: 'slide-right' },
+                  { title: 'Slide Left', value: 'slide-left' },
+                  { title: 'Vertical', value: 'vertical' },
+                ],
+              },
+              initialValue: 'slide-right',
+            }),
+            defineField({
+              name: 'heightClass',
+              title: 'Height Class',
+              type: 'string',
+              initialValue: 'h-[40vh] md:h-[50vh]',
+            }),
+          ],
+        }),
+      ],
+    }),
   ],
 })

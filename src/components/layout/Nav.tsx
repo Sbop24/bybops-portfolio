@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { useScroll, useMotionValueEvent, m, AnimatePresence } from 'framer-motion'
 
 const links = [
@@ -14,6 +14,7 @@ const links = [
 export default function Nav() {
   const { scrollY } = useScroll()
   const pathname = usePathname()
+  const router = useRouter()
   const isHome = pathname === '/'
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -25,18 +26,29 @@ export default function Nav() {
   const solid = !isHome || scrolled
   const navBg = solid ? 'bg-base/95 backdrop-blur-md border-b border-border' : 'bg-transparent'
 
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    setMenuOpen(false)
+    if (isHome) {
+      // Already home — scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } else {
+      // Navigate to home, then ensure scroll is at top
+      router.push('/')
+      window.scrollTo({ top: 0, behavior: 'instant' })
+    }
+  }
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${navBg}`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-6">
+        {/* Logo */}
         <Link
           href="/"
-          className="font-display text-xl text-text-primary"
-          onClick={() => {
-            setMenuOpen(false)
-            if (isHome) window.scrollTo({ top: 0, behavior: 'smooth' })
-          }}
+          onClick={handleLogoClick}
+          className="font-display text-xl text-text-primary cursor-pointer"
         >
           ByBops
         </Link>
@@ -60,7 +72,7 @@ export default function Nav() {
 
         {/* Mobile hamburger */}
         <button
-          className="flex flex-col gap-1.5 md:hidden"
+          className="flex flex-col gap-1.5 md:hidden p-1"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label={menuOpen ? 'Close menu' : 'Open menu'}
         >
