@@ -17,16 +17,16 @@ Clients land on the site and immediately feel the luxury, dark aesthetic — and
 
 ### Active
 
-- [ ] Sanity Studio accessible at /studio with singleton sidebar structure
-- [ ] All data queries typed and wired (Photo, AboutData, ShopItemData) with placeholder fallbacks
-- [ ] Page transitions between routes (fade with AnimatePresence)
-- [ ] Fixed navigation: transparent on home hero, solid after scroll / on inner pages
-- [ ] Home page complete: HeroSection, FeaturedWork (Sanity data), CarAnimation, AboutSnippet, BookingCTA
-- [ ] Gallery page: category rows + slide-in drawer
-- [ ] About page: editorial two-column layout with PortableText
-- [ ] Booking page: Calendly embed
-- [ ] Shop page: hidden product grid (not in nav, accessible via /shop directly)
-- [ ] Production build: zero errors, all pages verified
+- [x] Sanity Studio accessible at /studio with singleton sidebar structure
+- [x] All data queries typed and wired (Photo, AboutData, ShopItemData) with placeholder fallbacks
+- [x] Page transitions between routes (fade with AnimatePresence)
+- [x] Fixed navigation: transparent on home hero, solid after scroll / on inner pages
+- [x] Home page complete: HeroSection, FeaturedWork (Sanity data), CarAnimation, AboutSnippet, BookingCTA
+- [x] Gallery page: category rows + slide-in drawer
+- [x] About page: editorial two-column layout with PortableText
+- [x] Booking page: Calendly embed
+- [x] Shop page: hidden product grid (not in nav, accessible via /shop directly)
+- [x] Production build: zero errors, all pages verified
 
 ### Out of Scope
 
@@ -62,8 +62,8 @@ Clients land on the site and immediately feel the luxury, dark aesthetic — and
 | LazyMotion with domMax | domMax required for drag (FeaturedWork) and useScroll (CarAnimation) | ✓ Good |
 | galleryImage → photo schema rename | Cleaner naming, aligns with content model | ✓ Good |
 | about as singleton | Only one about page, no list needed in CMS | ✓ Good |
-| Shop page hidden from nav | Shop not ready to launch, preserve route for future | — Pending |
-| 21st.dev nav component (ali-imam/navbar) | Saves time, matches scroll pattern needed | — Pending |
+| Shop page hidden from nav | Shop hidden intentionally, route available for future launch | ✓ Completed |
+| 21st.dev nav component (ali-imam/navbar) | Saves time, matches scroll pattern needed | ✓ Completed |
 
 ---
-*Last updated: 2026-03-31 after Phase 1 complete*
+*Last updated: 2026-04-04 after environment setup and build verification*

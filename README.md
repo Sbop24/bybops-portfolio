@@ -20,6 +20,29 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Environment variables
+
+Copy `.env.local.example` to `.env.local` and fill in the values before running the app locally.
+
+Required values:
+
+- `NEXT_PUBLIC_SANITY_PROJECT_ID`
+- `NEXT_PUBLIC_SANITY_DATASET`
+- `SANITY_API_READ_TOKEN`
+- `NEXT_PUBLIC_CALENDLY_URL`
+
+When deploying on Vercel, set the same variables in the Vercel project dashboard under Settings > Environment Variables.
+
+## Deployment checklist
+
+1. Copy `.env.local.example` to `.env.local`.
+2. Populate the required env vars in `.env.local`.
+3. Install dependencies if needed: `npm install`.
+4. Run the app locally: `npm run dev`.
+5. Confirm `/`, `/gallery`, `/about`, `/booking`, `/shop`, and `/studio` load correctly.
+6. Deploy to Vercel.
+7. Add the same environment variables in Vercel project settings.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
