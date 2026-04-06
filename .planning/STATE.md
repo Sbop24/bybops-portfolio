@@ -2,74 +2,41 @@
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-03-31)
+See `.planning/PROJECT.md` (updated 2026-04-06).
 
-**Core value:** Clients land on the site and immediately feel the luxury, dark aesthetic — and book a session.
-**Current status:** ALL 10 PHASES COMPLETE — build ready for deployment
+Core value: Clients land on the site and immediately feel the luxury, dark aesthetic and want to book a session.
+
+Current status: Post-build stabilization in progress. Local branch is verified; live deployment and security-warning diagnosis are next.
 
 ## Current Position
 
-Phase: 10 of 10 (COMPLETE)
-Plan: 1 of 1 in current phase
-Status: Done
-Last activity: 2026-04-01 — Phase 10 verification passed
+- Phase: Post-build stabilization
+- Status: In progress
+- Last activity: 2026-04-06 - ByBops nav black-screen regression fixed and pushed
 
-Progress: [██████████] 100%
+## Current Priorities
 
-## Performance Metrics
+1. Restart Codex so Chrome DevTools MCP can load.
+2. Inspect `https://bybops.ca` in a real browser session.
+3. Identify the exact source of the site-wide security warning.
+4. Verify whether production is still serving an older build and redeploy if needed.
+5. Re-test the live site after deployment.
+6. Start Stitch-guided homepage redesign planning.
 
-**Velocity:**
+## Key Decisions
 
-- Total plans completed: 10
-- Average duration: —
-- Total execution time: —
+- Tailwind v4 stays CSS `@theme` based.
+- Sanity remains the source of truth for managed content.
+- Route-level page transitions are disabled on purpose because the prior wrapper caused hidden-screen behavior on live navigation.
+- The ByBops logo should behave like a normal link off-home and only smooth-scroll on the homepage itself.
+- All meaningful code changes must be verified before completion or push.
 
-**By Phase:**
+## Known Concerns
 
-| Phase | Plans | Total | Avg/Plan |
-|-------|-------|-------|----------|
-| 1. Design System | 1/1 | — | — |
-| 2. Schema + Data Layer | 1/1 | — | — |
-| 3. Page Transitions | 1/1 | — | — |
-| 4. Navigation | 1/1 | — | — |
-| 5. Home Page Completion | 1/1 | — | — |
-| 6. Gallery Page | 1/1 | — | — |
-| 7. About Page | 1/1 | — | — |
-| 8. Booking Page | 1/1 | — | — |
-| 9. Shop Page (Hidden) | 1/1 | — | — |
-| 10. Final Build + Full Verification | 1/1 | — | — |
+- Live `bybops.ca` still appears to be serving an older booking-page build with an `opacity:0` wrapper.
+- The site-wide "not fully secure" warning is unresolved.
+- Chrome DevTools MCP was added to `C:\Users\bopar\.codex\config.toml` outside the repo, but it will not load until Codex is restarted.
 
-## Accumulated Context
+## Resume File
 
-### Decisions
-
-- Phase 1: Tailwind v4 @theme only — no tailwind.config.ts. Token names auto-map: --color-gold → bg-gold, text-gold
-- Phase 1: @/* alias maps to ./src/* only — lib/sanity moved to src/lib/sanity/
-- Phase 1: domMax required (not domAnimation) — fixes drag + useScroll
-- Phase 1: galleryImage.ts deleted, replaced by photo.ts
-- Phase 1: about.ts is a singleton with __experimental_actions
-- Phase 6: Gallery uses server component page → GalleryClient ('use client') → CategoryRow + GalleryDrawer
-- Phase 6: Drawer uses spring animation (damping 30, stiffness 300), Escape key + backdrop close
-- Phase 6: scrollbar-hide CSS utility added to globals.css
-- Phase 6: getPhotosByCategory() falls back to PLACEHOLDER_GALLERY when Sanity is empty
-- Phase 7: AboutContent uses PortableTextBlock cast for body type safety
-- Phase 7: Sticky image uses lg:top-28 to clear fixed nav + portfolio pt-20
-- Phase 8: CalendlyWidget renders placeholder fallback when NEXT_PUBLIC_CALENDLY_URL is not set
-- Phase 9: Shop page has robots noindex/nofollow meta, not linked from nav
-- Phase 10: Build passes clean, all 6 routes return 200, zero motion.div usage, gold accents confirmed
-
-### Pending Todos
-
-- Set NEXT_PUBLIC_CALENDLY_URL in .env.local when Calendly is configured
-- Design changes (deferred by Sahib — post-launch)
-- Deploy to Vercel
-
-### Blockers/Concerns
-
-- NEXT_PUBLIC_CALENDLY_URL not yet set — booking page shows placeholder fallback until configured
-
-## Session Continuity
-
-Last session: 2026-04-01
-Stopped at: Phase 10 complete — all 10 phases done, ready for deployment
-Resume file: None
+`HANDOFF_2026-04-06.md`

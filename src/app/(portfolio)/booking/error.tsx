@@ -7,7 +7,7 @@ export default function BookingError({ reset }: { error: Error; reset: () => voi
       <p className="text-text-secondary mb-8">Could not load the booking page.</p>
       <button
         onClick={reset}
-        className="border border-gold text-gold hover:bg-gold hover:text-base transition-colors duration-300 px-6 py-2 text-sm tracking-widest uppercase"
+        className="border border-gold text-gold hover:bg-gold hover:text-base transition-colors duration-300 px-6 py-2 text-sm tracking-widest uppercase rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-base"
       >
         Try Again
       </button>

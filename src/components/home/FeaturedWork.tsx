@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { m, useReducedMotion } from 'framer-motion'
 import { staticVariants } from '@/lib/motion'
 import type { Photo } from '@/lib/sanity/queries'
+import { getImageUrl } from '@/lib/sanity/image'
 
 interface FeaturedWorkProps {
   photos: Photo[]
@@ -60,7 +61,7 @@ export default function FeaturedWork({ photos }: FeaturedWorkProps) {
               className="group relative w-56 sm:w-72 md:w-96 shrink-0 overflow-hidden rounded-sm aspect-[3/4]"
             >
               <Image
-                src={photo.image.asset.url ?? ''}
+                src={getImageUrl(photo.image, { width: 768, height: 1024, quality: 70 }) ?? ''}
                 alt={photo.altText}
                 fill
                 className="object-cover motion-safe:transition-transform motion-safe:duration-400 motion-safe:ease-out motion-safe:group-hover:scale-105"

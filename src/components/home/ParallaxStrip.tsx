@@ -29,7 +29,7 @@ export default function ParallaxStrip({
     offset: ['start end', 'end start'],
   })
 
-  // Horizontal: image travels dramatically across the frame (same feel as original CarAnimation)
+  // Horizontal: image travels dramatically across the frame for a strong editorial strip effect.
   const xRight = useTransform(
     scrollYProgress,
     [0, 1],

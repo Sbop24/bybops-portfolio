@@ -44,5 +44,12 @@ export const shopItem = defineType({
       type: 'boolean',
       initialValue: false,
     }),
+    defineField({
+      name: 'displayOrder',
+      title: 'Display Order',
+      type: 'number',
+      description: 'Lower numbers appear first in the shop grid.',
+      validation: (Rule) => Rule.integer().min(0),
+    }),
   ],
 })

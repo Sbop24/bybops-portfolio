@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import type { ShopItemData } from '@/lib/sanity/queries'
+import { getImageUrl } from '@/lib/sanity/image'
 
 interface ProductCardProps {
   item: ShopItemData
@@ -10,7 +11,7 @@ export default function ProductCard({ item }: ProductCardProps) {
     <div className={`group ${!item.available ? 'opacity-50' : ''}`}>
       <div className="relative aspect-square overflow-hidden rounded-sm mb-3">
         <Image
-          src={item.image.asset.url ?? ''}
+          src={getImageUrl(item.image, { width: 800, height: 800, quality: 70 }) ?? ''}
           alt={item.title}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-105"

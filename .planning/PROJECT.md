@@ -2,68 +2,44 @@
 
 ## What This Is
 
-A personal photography portfolio and client booking site for Sahib Boparai (ByBops). Showcases automotive, portrait, nature, and event photography, enables session bookings via Calendly, and includes a hidden shop for presets and prints.
+A personal photography portfolio and client booking site for Sahib Boparai (ByBops). It showcases automotive, portrait, nature, and event photography, supports session bookings through Calendly, and includes a hidden shop for future presets and prints.
 
 ## Core Value
 
-Clients land on the site and immediately feel the luxury, dark aesthetic — and book a session.
+Clients land on the site and immediately feel the luxury, dark aesthetic and want to book a session.
 
-## Requirements
+## Current Product State
 
-### Validated
+Completed:
 
-- ✓ Design system established — dark luxury tokens (gold, ivory, near-black), Cormorant Garamond display font, Tailwind v4 @theme — Phase 1
-- ✓ Sanity schemas defined — photo, workProject, shopItem, about singleton, masonryGallery, featuredWorkSection — Phase 1
+- Public portfolio routes are built
+- Sanity Studio is embedded at `/studio`
+- Homepage, gallery, about, booking, and hidden shop all exist
+- CMS truthfulness cleanup is complete
+- Sanity token hardening is complete
+- Sanity image pipeline cleanup is complete
+- Gallery drawer accessibility is complete
+- Keyboard focus and reduced-motion polish are complete
+- Homepage content drift has been reduced
+- Explicit ordering controls exist for photos and shop items
+- ByBops logo navigation regression is fixed locally and pushed
 
-### Active
+Still active:
 
-- [x] Sanity Studio accessible at /studio with singleton sidebar structure
-- [x] All data queries typed and wired (Photo, AboutData, ShopItemData) with placeholder fallbacks
-- [x] Page transitions between routes (fade with AnimatePresence)
-- [x] Fixed navigation: transparent on home hero, solid after scroll / on inner pages
-- [x] Home page complete: HeroSection, FeaturedWork (Sanity data), CarAnimation, AboutSnippet, BookingCTA
-- [x] Gallery page: category rows + slide-in drawer
-- [x] About page: editorial two-column layout with PortableText
-- [x] Booking page: Calendly embed
-- [x] Shop page: hidden product grid (not in nav, accessible via /shop directly)
-- [x] Production build: zero errors, all pages verified
-
-### Out of Scope
-
-- Public shop link in nav — shop exists but hidden until inventory is ready
-- @sanity/vision plugin — not installed, do not import
-- User authentication — no accounts or logins
-- CMS for nav/footer — content is hardcoded
-
-## Context
-
-- Stack: Next.js 16.2.1, React 19, TypeScript 5, Tailwind v4 (CSS @theme only), Framer Motion 12 (LazyMotion/domMax), Sanity v5, Geist + Cormorant Garamond fonts, Vercel deployment
-- Aesthetic reference: Audemars Piguet — dark luxury, sparse gold accents, editorial typography
-- Brand: "ByBops" (By + Boparai)
-- All animated components use `m.div` not `motion.div` (LazyMotion requirement)
-- @portabletext/react already installed (v6.0.3) — do NOT reinstall
-- Tailwind v4: ALL tokens in @theme block in globals.css — no tailwind.config.ts
-- @/* alias maps to ./src/* ONLY — lib/sanity is at src/lib/sanity/
+- Live production deployment must be checked against the latest verified branch
+- The site-wide security warning on `bybops.ca` must be diagnosed and fixed
+- Browser-level verification is needed after Codex restarts with Chrome DevTools MCP
+- Homepage redesign planning should happen before major visual changes
 
 ## Constraints
 
-- **Tech stack**: Tailwind v4 — CSS @theme only, no tailwind.config.ts
-- **Framer Motion**: LazyMotion with domMax — use m.div not motion.div everywhere
-- **Sanity**: No @sanity/vision — do not add to sanity.config.ts
-- **Next.js**: Use 'use cache' directive (not cache: 'force-cache') — requires experimental.useCache: true (already set)
-- **shadcn**: Must run `npx shadcn@latest init` before any `add` command (Phase 4)
-- **21st.dev**: Check for component matches before building from scratch (Phase 4 Nav, Phase 9 ProductCard already identified)
+- Tailwind v4 with CSS `@theme`
+- Sanity-backed content model
+- Mobile-first implementation
+- No secrets committed to the repo
+- All meaningful code changes must be verified before push
+- Route-level page transitions are currently disabled on purpose because the previous wrapper caused hidden-screen behavior on live navigation
 
-## Key Decisions
+## Last Updated
 
-| Decision | Rationale | Outcome |
-|----------|-----------|---------|
-| Tailwind v4 with @theme CSS | Project was scaffolded with v4 — no config file needed | ✓ Good |
-| LazyMotion with domMax | domMax required for drag (FeaturedWork) and useScroll (CarAnimation) | ✓ Good |
-| galleryImage → photo schema rename | Cleaner naming, aligns with content model | ✓ Good |
-| about as singleton | Only one about page, no list needed in CMS | ✓ Good |
-| Shop page hidden from nav | Shop hidden intentionally, route available for future launch | ✓ Completed |
-| 21st.dev nav component (ali-imam/navbar) | Saves time, matches scroll pattern needed | ✓ Completed |
-
----
-*Last updated: 2026-04-04 after environment setup and build verification*
+2026-04-06

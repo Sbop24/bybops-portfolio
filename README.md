@@ -1,59 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ByBops Portfolio
 
-## Getting Started
+Photography portfolio and booking site for Sahib Boparai, built with Next.js App Router, Sanity, Tailwind v4, and Framer Motion.
 
-First, run the development server:
+## Stack
+
+- Next.js 16 App Router
+- React 19
+- TypeScript 5
+- Tailwind CSS v4
+- Framer Motion 12
+- Sanity v5
+- Vercel deployment
+
+## Local Development
+
+Run the dev server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Important routes:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `/`
+- `/gallery`
+- `/about`
+- `/booking`
+- `/shop`
+- `/studio`
 
-## Environment variables
+## Environment Variables
 
-Copy `.env.local.example` to `.env.local` and fill in the values before running the app locally.
+Copy `.env.local.example` to `.env.local` and populate the values you need.
 
-Required values:
+Required:
 
 - `NEXT_PUBLIC_SANITY_PROJECT_ID`
 - `NEXT_PUBLIC_SANITY_DATASET`
-- `SANITY_API_READ_TOKEN`
+
+Optional:
+
 - `NEXT_PUBLIC_CALENDLY_URL`
+  If omitted, the booking page falls back to a placeholder state.
+- `SANITY_API_READ_TOKEN`
+  Server-only. Use only for private or draft Sanity reads.
 
-When deploying on Vercel, set the same variables in the Vercel project dashboard under Settings > Environment Variables.
+## Verification Workflow
 
-## Deployment checklist
+Before calling work done or pushing code:
 
-1. Copy `.env.local.example` to `.env.local`.
-2. Populate the required env vars in `.env.local`.
-3. Install dependencies if needed: `npm install`.
-4. Run the app locally: `npm run dev`.
-5. Confirm `/`, `/gallery`, `/about`, `/booking`, `/shop`, and `/studio` load correctly.
-6. Deploy to Vercel.
-7. Add the same environment variables in Vercel project settings.
+1. Run `npm.cmd run lint` when app code changed.
+2. Run `npm.cmd run build`.
+3. Run a small smoke test on the routes affected by the change.
+4. Fix failures before pushing.
 
-## Learn More
+## Deployment Checklist
 
-To learn more about Next.js, take a look at the following resources:
+1. Configure `.env.local`.
+2. Run local verification.
+3. Run `npm.cmd run build`.
+4. Deploy to Vercel.
+5. Add the same environment variables in Vercel.
+6. Re-test the live site after deployment.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Current Known Live Issues
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `bybops.ca` still needs browser-level inspection for the site-wide "not fully secure" warning.
+- Production may still be serving an older booking-page build, so verify deployment state before assuming a code regression.
 
-## Deploy on Vercel
+## Notes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- All pushed code should go only to `Sbop24/bybops-portfolio`.
+- Do not commit secrets, tokens, `.env.local`, or machine-local config.

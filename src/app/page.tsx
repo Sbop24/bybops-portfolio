@@ -1,31 +1,37 @@
-import { getFeaturedPhotos, getParallaxStrips } from '@/lib/sanity/queries'
+import { getAbout, getFeaturedPhotos, getHomePageContent } from '@/lib/sanity/queries'
 import HeroSection from '@/components/home/HeroSection'
 import FeaturedWork from '@/components/home/FeaturedWork'
 import ParallaxStrip from '@/components/home/ParallaxStrip'
 import AboutSnippet from '@/components/home/AboutSnippet'
 import BookingCTA from '@/components/home/BookingCTA'
+import { getImageUrl } from '@/lib/sanity/image'
+import { FALLBACK_PARALLAX_STRIP_URL } from '@/lib/sanity/placeholders'
 
 export default async function HomePage() {
-  const [featuredPhotos, parallaxStrips] = await Promise.all([getFeaturedPhotos(), getParallaxStrips()])
+  const [featuredPhotos, homePageContent, about] = await Promise.all([
+    getFeaturedPhotos(),
+    getHomePageContent(),
+    getAbout(),
+  ])
 
   return (
     <main>
-      <HeroSection />
+      <HeroSection content={homePageContent} />
       <FeaturedWork photos={featuredPhotos} />
 
-      {parallaxStrips.map((strip, index) => (
+      {homePageContent.parallaxStrips.map((strip, index) => (
         <ParallaxStrip
           key={`${strip.altText}-${index}`}
-          src={strip.image.asset.url ?? 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1600'}
+          src={getImageUrl(strip.image, { width: 2000, quality: 85 }) ?? FALLBACK_PARALLAX_STRIP_URL}
           alt={strip.altText}
           variant={strip.variant}
           heightClass={strip.heightClass}
         />
       ))}
 
-      <AboutSnippet />
+      <AboutSnippet about={about} />
 
-      <BookingCTA />
+      <BookingCTA content={homePageContent} />
     </main>
   )
 }

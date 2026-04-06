@@ -16,7 +16,7 @@ export default function GalleryError({
       </p>
       <button
         onClick={reset}
-        className="px-6 py-3 border border-gold text-gold text-sm uppercase tracking-widest hover:bg-gold/10 transition-colors duration-200"
+        className="px-6 py-3 border border-gold text-gold text-sm uppercase tracking-widest hover:bg-gold/10 transition-colors duration-200 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-base"
       >
         Try Again
       </button>
