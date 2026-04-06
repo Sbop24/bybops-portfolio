@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { useRouter, usePathname } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { useScroll, useMotionValueEvent, m, AnimatePresence } from 'framer-motion'
 
 const links = [
@@ -14,7 +14,6 @@ const links = [
 export default function Nav() {
   const { scrollY } = useScroll()
   const pathname = usePathname()
-  const router = useRouter()
   const isHome = pathname === '/'
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -36,10 +35,7 @@ export default function Nav() {
     if (isHome) {
       e.preventDefault()
       window.scrollTo({ top: 0, behavior: 'smooth' })
-      return
     }
-
-    router.push('/', { scroll: true })
   }
 
   return (
@@ -72,6 +68,7 @@ export default function Nav() {
         </div>
 
         <button
+          type="button"
           className="flex flex-col gap-1.5 md:hidden p-1 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-base"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label={menuOpen ? 'Close menu' : 'Open menu'}
