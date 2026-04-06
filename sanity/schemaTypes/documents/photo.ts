@@ -44,5 +44,12 @@ export const photo = defineType({
       type: 'boolean',
       initialValue: false,
     }),
+    defineField({
+      name: 'displayOrder',
+      title: 'Display Order',
+      type: 'number',
+      description: 'Lower numbers appear first in the gallery and featured work.',
+      validation: (Rule) => Rule.integer().min(0),
+    }),
   ],
 })

@@ -27,6 +27,7 @@ export interface Photo {
   category: 'Cars' | 'Couples' | 'Nature' | 'Event'
   altText: string
   featured: boolean
+  displayOrder?: number | null
 }
 
 export interface AboutData {
@@ -54,6 +55,7 @@ export interface ShopItemData {
   image: CmsImage
   description: string | null
   available: boolean
+  displayOrder?: number | null
 }
 
 export interface HomePageContent {
@@ -77,7 +79,8 @@ const PHOTO_FRAGMENT = `
   image { asset, hotspot, crop },
   category,
   altText,
-  featured
+  featured,
+  displayOrder
 `
 
 const ABOUT_TAG = 'sanity:about'
@@ -168,7 +171,7 @@ export async function getFeaturedPhotos(): Promise<Photo[]> {
   cacheTag(PHOTO_TAG, FEATURED_PHOTO_TAG)
 
   const data = await sanityClient.fetch<Photo[]>(
-    `*[_type == "photo" && featured == true] | order(_updatedAt desc, _createdAt desc) { ${PHOTO_FRAGMENT} }`
+    `*[_type == "photo" && featured == true] | order(coalesce(displayOrder, 9999) asc, _updatedAt desc, _createdAt desc) { ${PHOTO_FRAGMENT} }`
   )
   return data && data.length > 0 ? data : PLACEHOLDER_PHOTOS
 }
@@ -179,7 +182,7 @@ export async function getPhotosByCategory(): Promise<Record<string, Photo[]>> {
   cacheTag(PHOTO_TAG)
 
   const photos = await sanityClient.fetch<Photo[]>(
-    `*[_type == "photo"] | order(category asc, _updatedAt desc, _createdAt desc) { ${PHOTO_FRAGMENT} }`
+    `*[_type == "photo"] | order(category asc, coalesce(displayOrder, 9999) asc, _updatedAt desc, _createdAt desc) { ${PHOTO_FRAGMENT} }`
   )
   const all = photos ?? []
   if (all.length === 0) return PLACEHOLDER_GALLERY
@@ -249,7 +252,7 @@ export async function getShopItems(): Promise<ShopItemData[]> {
   cacheTag(SHOP_TAG)
 
   const data = await sanityClient.fetch<ShopItemData[]>(
-    `*[_type == "shopItem"] | order(available desc, _updatedAt desc, _createdAt desc) {
+    `*[_type == "shopItem"] | order(available desc, coalesce(displayOrder, 9999) asc, _updatedAt desc, _createdAt desc) {
       _id,
       title,
       "slug": slug.current,
@@ -257,7 +260,8 @@ export async function getShopItems(): Promise<ShopItemData[]> {
       price,
       image { asset, hotspot, crop },
       description,
-      available
+      available,
+      displayOrder
     }`
   )
   return data ?? []
