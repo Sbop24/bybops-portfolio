@@ -28,8 +28,12 @@ Required values:
 
 - `NEXT_PUBLIC_SANITY_PROJECT_ID`
 - `NEXT_PUBLIC_SANITY_DATASET`
-- `SANITY_API_READ_TOKEN`
 - `NEXT_PUBLIC_CALENDLY_URL`
+
+Optional value:
+
+- `SANITY_API_READ_TOKEN`
+  Use this only for server-only Sanity reads of private or draft content. Published portfolio content does not require it.
 
 When deploying on Vercel, set the same variables in the Vercel project dashboard under Settings > Environment Variables.
 

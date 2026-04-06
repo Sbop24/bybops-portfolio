@@ -94,12 +94,14 @@
 - Commit message format: `type(scope): description` — e.g., `feat(gallery): add staggered entrance animation`.
 - Never commit `.env.local`, Sanity tokens, or API keys.
 - Run `npm run build` before any commit that touches a Server/Client Component boundary change — boundary mistakes only surface at build time, not dev.
+- Do not leave code unverified: before marking work done or pushing, run the relevant integrity checks for the change set and fix failures first.
 
 ---
 
 ## Dev Workflow Rules
 
 - After every code change, run `npm run dev` and verify in browser before marking done.
+- For code integrity, default to `npm run lint`, `npm run build`, and a small route/runtime smoke test when behavior changed.
 - If a Sanity schema changes, restart the dev server — schema changes do not hot reload.
 - Use `npm run build && npm run start` to catch any App Router/SSR issues that don't appear in dev mode.
 - Sanity Studio runs at `/studio` via the embedded route — never deploy it to a separate project.
@@ -146,4 +148,9 @@ sanity/
 | 2026-04-01 | Homepage overhaul: (1) Created reusable ParallaxStrip.tsx with slide-right, slide-left, and vertical variants — replaces CarAnimation.tsx. (2) page.tsx updated to use 3 ParallaxStrip instances (Chiron right-slide h-[45vh], sports car left-slide h-[32vh], mountain vertical h-[40vh]), extending page length significantly. (3) AboutSnippet.tsx made compact: aspect ratio 3/4→4/3, padding py-14→py-8, text trimmed. (4) Nav.tsx ByBops logo fixed: switched to anchor + router.push() with explicit scroll reset for reliable home navigation from all routes. (5) Mobile-first pass: HeroSection uses h-[100svh], text scales text-4xl sm:text-5xl md:text-7xl; FeaturedWork cards w-56 on mobile with touch-action pan-x; BookingCTA text scales down; all parallax strips have responsive heights. |
 | 2026-04-01 | Security fixes: NPM audit vulnerabilities reduced from 7 to 5 total (eliminated 2 high-severity lodash/lodash-es issues via package updates). Sanity upgraded to 5.14.1, next-sanity to 12.2.1. Remaining 5 moderate vulnerabilities in Sanity ecosystem. |
 | 2026-04-03 | Security update: Upgraded Sanity from 5.14.1 to 5.19.0. Remaining 5 moderate vulnerabilities are in transitive dependencies (js-yaml prototype pollution) and require upstream fixes. |
-| 2026-04-03 | DNS configuration completed: Root A records set to Vercel IPs (76.76.21.21, 76.76.21.22, 76.76.21.23). Nameservers changed from Namecheap BasicDNS to custom Vercel nameservers (ns1.vercel-dns.com, ns2.vercel-dns.com). HTTPS fully active. Awaiting nameserver propagation (10min–24hrs).
+| 2026-04-03 | DNS configuration completed: Root A records set to Vercel IPs (76.76.21.21, 76.76.21.22, 76.76.21.23). Nameservers changed from Namecheap BasicDNS to custom Vercel nameservers (ns1.vercel-dns.com, ns2.vercel-dns.com). HTTPS fully active. Awaiting nameserver propagation (10min–24hrs). |
+| 2026-04-05 | CMS truthfulness cleanup complete: removed unused `featuredWorkSection.projects`, removed `workProject` and `masonryGallery` schema types, and removed the unused Gallery singleton from Sanity Studio so editor controls now match what the site actually reads. Sanity token hardening also completed: public content client no longer uses `SANITY_API_READ_TOKEN`; separate `server-only` authenticated client added for future private/draft reads. |
+| 2026-04-05 | Sanity image pipeline cleanup complete: queries now keep Sanity image references instead of dereferencing raw URLs, and the site now uses the Sanity image builder for transformed WebP URLs with consistent sizing and quality while still allowing placeholder remote URLs during development. |
+| 2026-04-05 | Gallery drawer accessibility improved: drawer is now marked as a dialog, focus moves into it on open, Tab/Shift+Tab stay inside it while open, Escape closes it, and focus returns to the previous control on close. |
+| 2026-04-05 | Keyboard accessibility polish complete: visible gold focus rings added to key links/buttons, logo link now preserves native browser new-tab behavior, PageTransition respects reduced-motion preference, and `color-scheme: dark` added to align browser defaults with the site theme. |
+| 2026-04-05 | Integrity workflow tightened: moving forward, code changes are expected to clear lint, production build, and relevant runtime smoke tests before completion or push. |

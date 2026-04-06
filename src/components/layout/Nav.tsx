@@ -27,16 +27,19 @@ export default function Nav() {
   const navBg = solid ? 'bg-base/95 backdrop-blur-md border-b border-border' : 'bg-transparent'
 
   const handleLogoClick = (e: React.MouseEvent) => {
-    e.preventDefault()
-    setMenuOpen(false)
-    if (isHome) {
-      // Already home — scroll to top
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    } else {
-      // Navigate to home, then ensure scroll is at top
-      router.push('/')
-      window.scrollTo({ top: 0, behavior: 'instant' })
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) {
+      return
     }
+
+    setMenuOpen(false)
+
+    if (isHome) {
+      e.preventDefault()
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      return
+    }
+
+    router.push('/', { scroll: true })
   }
 
   return (
@@ -44,22 +47,20 @@ export default function Nav() {
       className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${navBg}`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-6">
-        {/* Logo */}
         <Link
           href="/"
           onClick={handleLogoClick}
-          className="font-display text-xl text-text-primary cursor-pointer"
+          className="font-display text-xl text-text-primary cursor-pointer rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-base"
         >
           ByBops
         </Link>
 
-        {/* Desktop links */}
         <div className="hidden gap-8 md:flex">
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={`text-sm tracking-widest uppercase transition-colors duration-200 ${
+              className={`text-sm tracking-widest uppercase transition-colors duration-200 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-base ${
                 pathname === link.href
                   ? 'text-gold'
                   : 'text-text-secondary hover:text-text-primary'
@@ -70,11 +71,12 @@ export default function Nav() {
           ))}
         </div>
 
-        {/* Mobile hamburger */}
         <button
-          className="flex flex-col gap-1.5 md:hidden p-1"
+          className="flex flex-col gap-1.5 md:hidden p-1 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-base"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-nav-menu"
         >
           <span
             className={`block h-px w-6 bg-text-primary transition-transform duration-200 ${
@@ -94,10 +96,10 @@ export default function Nav() {
         </button>
       </div>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {menuOpen && (
           <m.div
+            id="mobile-nav-menu"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
@@ -109,7 +111,7 @@ export default function Nav() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className={`text-sm tracking-widest uppercase transition-colors duration-200 ${
+                  className={`text-sm tracking-widest uppercase transition-colors duration-200 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-base ${
                     pathname === link.href
                       ? 'text-gold'
                       : 'text-text-secondary hover:text-text-primary'

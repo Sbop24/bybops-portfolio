@@ -1,7 +1,10 @@
-import { useEffect, useCallback } from 'react'
+'use client'
+
+import { useEffect, useCallback, useId, useRef } from 'react'
 import Image from 'next/image'
 import { m, AnimatePresence, useReducedMotion } from 'framer-motion'
 import type { Photo } from '@/lib/sanity/queries'
+import { getImageUrl } from '@/lib/sanity/image'
 
 interface GalleryDrawerProps {
   category: string | null
@@ -22,23 +25,64 @@ const panelVariants = {
 
 export default function GalleryDrawer({ category, photos, onClose }: GalleryDrawerProps) {
   const prefersReduced = useReducedMotion()
+  const titleId = useId()
+  const panelRef = useRef<HTMLDivElement>(null)
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
+  const lastFocusedElementRef = useRef<HTMLElement | null>(null)
 
-  // Lock body scroll when open
+  const getFocusableElements = useCallback(() => {
+    if (!panelRef.current) return []
+
+    return Array.from(
+      panelRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      ),
+    ).filter((element) => !element.hasAttribute('disabled') && element.offsetParent !== null)
+  }, [])
+
   useEffect(() => {
-    if (category) {
-      document.body.style.overflow = 'hidden'
-    }
+    if (!category) return
+
+    lastFocusedElementRef.current =
+      document.activeElement instanceof HTMLElement ? document.activeElement : null
+
+    document.body.style.overflow = 'hidden'
+
+    const focusTimer = window.setTimeout(() => {
+      closeButtonRef.current?.focus()
+    }, 0)
+
     return () => {
+      window.clearTimeout(focusTimer)
       document.body.style.overflow = ''
+      lastFocusedElementRef.current?.focus()
     }
   }, [category])
 
-  // Escape key closes drawer
   const handleKey = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
+
+      if (e.key !== 'Tab') return
+
+      const focusableElements = getFocusableElements()
+      if (focusableElements.length === 0) {
+        e.preventDefault()
+        return
+      }
+
+      const firstElement = focusableElements[0]
+      const lastElement = focusableElements[focusableElements.length - 1]
+
+      if (e.shiftKey && document.activeElement === firstElement) {
+        e.preventDefault()
+        lastElement.focus()
+      } else if (!e.shiftKey && document.activeElement === lastElement) {
+        e.preventDefault()
+        firstElement.focus()
+      }
     },
-    [onClose],
+    [getFocusableElements, onClose],
   )
 
   useEffect(() => {
@@ -59,23 +103,30 @@ export default function GalleryDrawer({ category, photos, onClose }: GalleryDraw
             animate="visible"
             exit="hidden"
             onClick={onClose}
+            aria-hidden="true"
             className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm"
           />
 
           {/* Panel */}
           <m.div
+            ref={panelRef}
             variants={prefersReduced ? undefined : panelVariants}
             initial={prefersReduced ? { opacity: 0 } : 'hidden'}
             animate={prefersReduced ? { opacity: 1 } : 'visible'}
             exit={prefersReduced ? { opacity: 0 } : 'exit'}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={titleId}
+            tabIndex={-1}
             className="fixed top-0 right-0 z-50 h-full w-full md:w-[85vw] lg:w-[70vw] bg-base overflow-y-auto"
           >
             {/* Header */}
             <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-6 md:px-10 bg-base/95 backdrop-blur-md border-b border-border">
-              <h2 className="font-display text-2xl md:text-3xl text-text-primary">
+              <h2 id={titleId} className="font-display text-2xl md:text-3xl text-text-primary">
                 {category}
               </h2>
               <button
+                ref={closeButtonRef}
                 onClick={onClose}
                 className="text-text-secondary hover:text-text-primary transition-colors duration-200 p-2"
                 aria-label="Close drawer"
@@ -97,7 +148,7 @@ export default function GalleryDrawer({ category, photos, onClose }: GalleryDraw
                   className="relative aspect-[4/3] overflow-hidden rounded-sm group"
                 >
                   <Image
-                    src={photo.image.asset.url ?? ''}
+                    src={getImageUrl(photo.image, { width: 800, height: 600, quality: 70 }) ?? ''}
                     alt={photo.altText}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"

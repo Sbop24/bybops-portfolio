@@ -1,26 +1,41 @@
+import { cacheLife, cacheTag } from 'next/cache'
 import { sanityClient } from './client'
 
 // --- Types ---
+
+export interface CmsImageAsset {
+  _ref?: string
+  _type?: 'reference'
+  url?: string
+}
+
+export interface CmsImage {
+  asset?: CmsImageAsset | null
+  hotspot?: object
+  crop?: object
+}
 
 export interface Photo {
   _id: string
   title: string
   slug: string
-  image: { asset: { _ref: string; url?: string }; hotspot?: object; crop?: object }
+  image: CmsImage
   category: 'Cars' | 'Couples' | 'Nature' | 'Event'
   altText: string
   featured: boolean
 }
 
 export interface AboutData {
+  title: string | null
   body: unknown[] | null
-  profileImage: { asset: { _ref: string; url?: string } } | null
+  profileImageAlt: string | null
+  profileImage: CmsImage | null
 }
 
 export type ParallaxVariant = 'slide-right' | 'slide-left' | 'vertical'
 
 export interface ParallaxStripData {
-  image: { asset: { _ref: string; url?: string } }
+  image: CmsImage
   altText: string
   variant: ParallaxVariant
   heightClass: string
@@ -32,9 +47,21 @@ export interface ShopItemData {
   slug: string
   type: 'preset' | 'print'
   price: number
-  image: { asset: { _ref: string; url?: string } }
+  image: CmsImage
   description: string | null
   available: boolean
+}
+
+export interface HomePageContent {
+  heroImage: CmsImage | null
+  heroAltText: string | null
+  heroLabel: string | null
+  heroHeadingLineOne: string | null
+  heroHeadingLineTwo: string | null
+  bookingHeadingLineOne: string | null
+  bookingHeadingLineTwo: string | null
+  bookingButtonLabel: string | null
+  parallaxStrips: ParallaxStripData[]
 }
 
 // --- GROQ Fragments ---
@@ -43,11 +70,17 @@ const PHOTO_FRAGMENT = `
   _id,
   title,
   "slug": slug.current,
-  image { asset-> { _ref, url }, hotspot, crop },
+  image { asset, hotspot, crop },
   category,
   altText,
   featured
 `
+
+const ABOUT_TAG = 'sanity:about'
+const HOME_PAGE_TAG = 'sanity:home-page'
+const PHOTO_TAG = 'sanity:photo'
+const FEATURED_PHOTO_TAG = 'sanity:photo:featured'
+const SHOP_TAG = 'sanity:shop-item'
 
 // --- Placeholder Data ---
 
@@ -102,47 +135,126 @@ const PLACEHOLDER_PARALLAX_STRIPS: ParallaxStripData[] = [
   },
 ]
 
+const PLACEHOLDER_HOME_PAGE_CONTENT: HomePageContent = {
+  heroImage: {
+    asset: {
+      _ref: '',
+      url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1800',
+    },
+  },
+  heroAltText: 'Hero background - car photography',
+  heroLabel: 'Photography by Sahib Boparai',
+  heroHeadingLineOne: 'Moments',
+  heroHeadingLineTwo: 'Worth Keeping',
+  bookingHeadingLineOne: "Let's create something",
+  bookingHeadingLineTwo: 'worth remembering',
+  bookingButtonLabel: 'Book a Session',
+  parallaxStrips: PLACEHOLDER_PARALLAX_STRIPS,
+}
+
+function getOrderedCategoryPhotos(photos: Photo[], category: Photo['category']) {
+  return photos.filter((photo) => photo.category === category)
+}
+
 // --- Query Functions ---
 
 export async function getFeaturedPhotos(): Promise<Photo[]> {
   'use cache'
+  cacheLife('hours')
+  cacheTag(PHOTO_TAG, FEATURED_PHOTO_TAG)
+
   const data = await sanityClient.fetch<Photo[]>(
-    `*[_type == "photo" && featured == true] { ${PHOTO_FRAGMENT} }`
+    `*[_type == "photo" && featured == true] | order(_updatedAt desc, _createdAt desc) { ${PHOTO_FRAGMENT} }`
   )
-  return data ?? PLACEHOLDER_PHOTOS
+  return data && data.length > 0 ? data : PLACEHOLDER_PHOTOS
 }
 
 export async function getPhotosByCategory(): Promise<Record<string, Photo[]>> {
   'use cache'
-  const photos = await sanityClient.fetch<Photo[]>(`*[_type == "photo"] { ${PHOTO_FRAGMENT} }`)
+  cacheLife('hours')
+  cacheTag(PHOTO_TAG)
+
+  const photos = await sanityClient.fetch<Photo[]>(
+    `*[_type == "photo"] | order(category asc, _updatedAt desc, _createdAt desc) { ${PHOTO_FRAGMENT} }`
+  )
   const all = photos ?? []
   if (all.length === 0) return PLACEHOLDER_GALLERY
   return {
-    Cars: all.filter((p) => p.category === 'Cars'),
-    Couples: all.filter((p) => p.category === 'Couples'),
-    Nature: all.filter((p) => p.category === 'Nature'),
-    Event: all.filter((p) => p.category === 'Event'),
+    Cars: getOrderedCategoryPhotos(all, 'Cars'),
+    Couples: getOrderedCategoryPhotos(all, 'Couples'),
+    Nature: getOrderedCategoryPhotos(all, 'Nature'),
+    Event: getOrderedCategoryPhotos(all, 'Event'),
   }
 }
 
 export async function getAbout(): Promise<AboutData> {
   'use cache'
-  const data = await sanityClient.fetch<AboutData>(`*[_type == "about"][0] { body, profileImage { asset-> } }`)
-  return data ?? { body: null, profileImage: null }
+  cacheLife('days')
+  cacheTag(ABOUT_TAG)
+
+  const data = await sanityClient.fetch<AboutData>(
+    `*[_type == "about"][0] {
+      title,
+      body,
+      profileImageAlt,
+      profileImage { asset, hotspot, crop }
+    }`
+  )
+  return data ?? { title: null, body: null, profileImageAlt: null, profileImage: null }
 }
 
-export async function getParallaxStrips(): Promise<ParallaxStripData[]> {
+export async function getHomePageContent(): Promise<HomePageContent> {
   'use cache'
-  const data = await sanityClient.fetch<ParallaxStripData[]>(
-    `*[_type == "featuredWorkSection"][0] { parallaxStrips[] { image { asset-> { _ref, url } }, altText, variant, heightClass } }.parallaxStrips`
+  cacheLife('days')
+  cacheTag(HOME_PAGE_TAG)
+
+  const data = await sanityClient.fetch<HomePageContent>(
+    `*[_type == "featuredWorkSection"][0] {
+      heroImage { asset, hotspot, crop },
+      heroAltText,
+      heroLabel,
+      heroHeadingLineOne,
+      heroHeadingLineTwo,
+      bookingHeadingLineOne,
+      bookingHeadingLineTwo,
+      bookingButtonLabel,
+      parallaxStrips[] {
+        image { asset, hotspot, crop },
+        altText,
+        variant,
+        heightClass
+      }
+    }`
   )
-  return data ?? PLACEHOLDER_PARALLAX_STRIPS
+
+  if (!data) return PLACEHOLDER_HOME_PAGE_CONTENT
+
+  return {
+    ...PLACEHOLDER_HOME_PAGE_CONTENT,
+    ...data,
+    parallaxStrips:
+      data.parallaxStrips && data.parallaxStrips.length > 0
+        ? data.parallaxStrips
+        : PLACEHOLDER_PARALLAX_STRIPS,
+  }
 }
 
 export async function getShopItems(): Promise<ShopItemData[]> {
   'use cache'
+  cacheLife('hours')
+  cacheTag(SHOP_TAG)
+
   const data = await sanityClient.fetch<ShopItemData[]>(
-    `*[_type == "shopItem"] { _id, title, "slug": slug.current, type, price, image { asset-> }, description, available }`
+    `*[_type == "shopItem"] | order(available desc, _updatedAt desc, _createdAt desc) {
+      _id,
+      title,
+      "slug": slug.current,
+      type,
+      price,
+      image { asset, hotspot, crop },
+      description,
+      available
+    }`
   )
   return data ?? []
 }

@@ -14,11 +14,10 @@ export default defineConfig({
           .title('Content')
           .items([
             S.listItem().title('About').child(S.document().schemaType('about').documentId('about')),
-            S.listItem().title('Featured Work').child(S.document().schemaType('featuredWorkSection').documentId('featuredWorkSection')),
-            S.listItem().title('Gallery').child(S.document().schemaType('masonryGallery').documentId('masonryGallery')),
+            S.listItem().title('Home Page').child(S.document().schemaType('featuredWorkSection').documentId('featuredWorkSection')),
             S.divider(),
             ...S.documentTypeListItems().filter(
-              (item) => !['about', 'featuredWorkSection', 'masonryGallery'].includes(item.getId() ?? '')
+              (item) => !['about', 'featuredWorkSection'].includes(item.getId() ?? '')
             ),
           ]),
     }),

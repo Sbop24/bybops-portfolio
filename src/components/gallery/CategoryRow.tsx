@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import type { Photo } from '@/lib/sanity/queries'
+import { getImageUrl } from '@/lib/sanity/image'
 
 interface CategoryRowProps {
   category: string
@@ -14,7 +15,7 @@ export default function CategoryRow({ category, photos, onOpen }: CategoryRowPro
     <section className="mb-16">
       <button
         onClick={onOpen}
-        className="group mb-6 flex items-baseline gap-4 cursor-pointer"
+        className="group mb-6 flex items-baseline gap-4 cursor-pointer rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-base"
       >
         <h2 className="font-display text-3xl md:text-4xl text-text-primary">
           {category}
@@ -29,10 +30,10 @@ export default function CategoryRow({ category, photos, onOpen }: CategoryRowPro
           <button
             key={photo._id}
             onClick={onOpen}
-            className="relative shrink-0 w-64 md:w-80 aspect-[4/3] overflow-hidden rounded-sm cursor-pointer group/card"
+            className="relative shrink-0 w-64 md:w-80 aspect-[4/3] overflow-hidden rounded-sm cursor-pointer group/card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-base"
           >
             <Image
-              src={photo.image.asset.url ?? ''}
+              src={getImageUrl(photo.image, { width: 640, height: 480, quality: 70 }) ?? ''}
               alt={photo.altText}
               fill
               className="object-cover transition-transform duration-500 group-hover/card:scale-105"

@@ -5,6 +5,7 @@ import { PortableText, type PortableTextBlock } from '@portabletext/react'
 import { m, useReducedMotion } from 'framer-motion'
 import { staticVariants } from '@/lib/motion'
 import type { AboutData } from '@/lib/sanity/queries'
+import { getImageUrl } from '@/lib/sanity/image'
 
 const PLACEHOLDER_IMAGE = 'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=800'
 
@@ -17,7 +18,7 @@ const FALLBACK_BODY = [
       {
         _type: 'span',
         _key: 'f1s',
-        text: 'Based in Vancouver, BC, I work across automotive, landscape, portrait, and event photography — drawn to the details that hold still long enough to mean something. Every frame starts with light and ends with patience.',
+        text: 'Based in Vancouver, BC, I work across automotive, landscape, portrait, and event photography, drawn to the details that hold still long enough to mean something. Every frame starts with light and ends with patience.',
       },
     ],
     markDefs: [],
@@ -30,7 +31,7 @@ const FALLBACK_BODY = [
       {
         _type: 'span',
         _key: 'f2s',
-        text: "When I'm not chasing golden hour on the Sea-to-Sky, I'm in the city looking for geometry in glass and concrete. The camera changes what you notice — that's the whole point.",
+        text: "When I'm not chasing golden hour on the Sea-to-Sky, I'm in the city looking for geometry in glass and concrete. The camera changes what you notice; that is the whole point.",
       },
     ],
     markDefs: [],
@@ -43,7 +44,7 @@ const FALLBACK_BODY = [
       {
         _type: 'span',
         _key: 'f3s',
-        text: 'I shoot for clients who care about craft — people who understand that a single well-made image is worth more than a hundred careless ones.',
+        text: 'I shoot for clients who care about craft, people who understand that a single well-made image is worth more than a hundred careless ones.',
       },
     ],
     markDefs: [],
@@ -68,29 +69,29 @@ const blockVariants = {
 const portableTextComponents = {
   block: {
     normal: ({ children }: { children?: React.ReactNode }) => (
-      <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-6">
+      <p className="mb-6 text-base leading-relaxed text-text-secondary md:text-lg">
         {children}
       </p>
     ),
     h2: ({ children }: { children?: React.ReactNode }) => (
-      <h2 className="font-display font-light text-text-primary text-2xl md:text-3xl mb-4">
+      <h2 className="font-display text-text-primary mb-4 text-2xl font-light md:text-3xl">
         {children}
       </h2>
     ),
     h3: ({ children }: { children?: React.ReactNode }) => (
-      <h3 className="font-display font-light text-text-primary text-xl md:text-2xl mb-3">
+      <h3 className="font-display text-text-primary mb-3 text-xl font-light md:text-2xl">
         {children}
       </h3>
     ),
     blockquote: ({ children }: { children?: React.ReactNode }) => (
-      <blockquote className="border-l-2 border-gold pl-6 my-8 text-text-secondary italic">
+      <blockquote className="my-8 border-l-2 border-gold pl-6 italic text-text-secondary">
         {children}
       </blockquote>
     ),
   },
   marks: {
     strong: ({ children }: { children?: React.ReactNode }) => (
-      <strong className="text-text-primary font-medium">{children}</strong>
+      <strong className="font-medium text-text-primary">{children}</strong>
     ),
     em: ({ children }: { children?: React.ReactNode }) => (
       <em className="italic">{children}</em>
@@ -108,12 +109,13 @@ export default function AboutContent({ data }: AboutContentProps) {
   const headV = prefersReduced ? staticVariants : headingVariants
   const blkV = prefersReduced ? staticVariants : blockVariants
 
-  const imageUrl = data.profileImage?.asset?.url ?? PLACEHOLDER_IMAGE
+  const imageUrl = getImageUrl(data.profileImage, { width: 1200, height: 1600, quality: 85 }) ?? PLACEHOLDER_IMAGE
+  const imageAlt = data.profileImageAlt ?? 'Sahib Boparai - photographer'
+  const title = data.title ?? 'Eye for the quiet moment'
   const body = (data.body && data.body.length > 0 ? data.body : FALLBACK_BODY) as PortableTextBlock[]
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-20">
-      {/* Left: sticky profile image */}
+    <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
       <m.div
         variants={imgV}
         initial="hidden"
@@ -121,10 +123,10 @@ export default function AboutContent({ data }: AboutContentProps) {
         viewport={{ once: true }}
         className="lg:sticky lg:top-28 lg:self-start"
       >
-        <div className="relative w-full aspect-[3/4] overflow-hidden rounded-sm">
+        <div className="relative aspect-[3/4] w-full overflow-hidden rounded-sm">
           <Image
             src={imageUrl}
-            alt="Sahib Boparai — photographer"
+            alt={imageAlt}
             fill
             className="object-cover"
             sizes="(max-width: 1024px) 100vw, 45vw"
@@ -133,14 +135,13 @@ export default function AboutContent({ data }: AboutContentProps) {
         </div>
       </m.div>
 
-      {/* Right: text content */}
       <div className="flex flex-col">
         <m.p
           variants={headV}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="text-xs uppercase tracking-widest text-text-secondary mb-4"
+          className="mb-4 text-xs uppercase tracking-widest text-text-secondary"
         >
           About
         </m.p>
@@ -150,9 +151,9 @@ export default function AboutContent({ data }: AboutContentProps) {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="font-display font-light text-text-primary text-3xl md:text-5xl leading-snug mb-10"
+          className="font-display text-text-primary mb-10 text-3xl font-light leading-snug md:text-5xl"
         >
-          Eye for the quiet moment
+          {title}
         </m.h1>
 
         <m.div
