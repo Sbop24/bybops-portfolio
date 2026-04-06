@@ -127,8 +127,9 @@ export default function GalleryDrawer({ category, photos, onClose }: GalleryDraw
               </h2>
               <button
                 ref={closeButtonRef}
+                type="button"
                 onClick={onClose}
-                className="text-text-secondary hover:text-text-primary transition-colors duration-200 p-2"
+                className="rounded-sm p-2 text-text-secondary transition-colors duration-200 hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-base"
                 aria-label="Close drawer"
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">

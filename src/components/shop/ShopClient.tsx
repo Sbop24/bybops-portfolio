@@ -43,6 +43,7 @@ export default function ShopClient({ items }: ShopClientProps) {
         {FILTERS.map((f) => (
           <button
             key={f}
+            type="button"
             onClick={() => setFilter(f)}
             className={`text-sm tracking-widest uppercase transition-colors duration-200 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-base ${
               filter === f ? 'text-gold' : 'text-text-secondary hover:text-text-primary'

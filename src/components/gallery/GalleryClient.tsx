@@ -14,6 +14,18 @@ const CATEGORIES = ['Cars', 'Couples', 'Nature', 'Event'] as const
 export default function GalleryClient({ photosByCategory }: GalleryClientProps) {
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
   const handleClose = useCallback(() => setActiveCategory(null), [])
+  const hasPhotos = CATEGORIES.some((category) => (photosByCategory[category] ?? []).length > 0)
+
+  if (!hasPhotos) {
+    return (
+      <div className="rounded-sm border border-border px-6 py-12 text-center">
+        <p className="mb-2 text-sm text-text-primary">Gallery content is being updated.</p>
+        <p className="text-xs text-text-secondary">
+          Add photo documents in Sanity to populate the category rows here.
+        </p>
+      </div>
+    )
+  }
 
   return (
     <>

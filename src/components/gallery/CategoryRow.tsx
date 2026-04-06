@@ -14,6 +14,7 @@ export default function CategoryRow({ category, photos, onOpen }: CategoryRowPro
   return (
     <section className="mb-16">
       <button
+        type="button"
         onClick={onOpen}
         className="group mb-6 flex items-baseline gap-4 cursor-pointer rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-base"
       >
@@ -29,6 +30,7 @@ export default function CategoryRow({ category, photos, onOpen }: CategoryRowPro
         {photos.slice(0, 6).map((photo) => (
           <button
             key={photo._id}
+            type="button"
             onClick={onOpen}
             className="relative shrink-0 w-64 md:w-80 aspect-[4/3] overflow-hidden rounded-sm cursor-pointer group/card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-base"
           >
