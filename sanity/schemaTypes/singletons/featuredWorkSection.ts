@@ -19,6 +19,16 @@ export const featuredWorkSection = defineType({
       title: 'Hero Alt Text',
       type: 'string',
       initialValue: 'Hero background - car photography',
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const heroImage = (context.document as { heroImage?: unknown } | undefined)?.heroImage
+
+          if (heroImage && !value) {
+            return 'Hero alt text is required when a hero image is set.'
+          }
+
+          return true
+        }),
     }),
     defineField({
       name: 'heroLabel',

@@ -24,6 +24,16 @@ export const about = defineType({
       title: 'Profile Image Alt Text',
       type: 'string',
       initialValue: 'Sahib Boparai - photographer',
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const profileImage = (context.document as { profileImage?: unknown } | undefined)?.profileImage
+
+          if (profileImage && !value) {
+            return 'Profile image alt text is required when a profile image is set.'
+          }
+
+          return true
+        }),
     }),
     defineField({
       name: 'profileImage',

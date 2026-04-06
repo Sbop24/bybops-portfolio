@@ -24,6 +24,15 @@
 .DS_Store
 *.pem
 .claude/
+.idea/
+.vscode/
+.venv/
+.pytest_cache/
+.mypy_cache/
+.cache/
+*.code-workspace
+*.tmp
+*.bak
 
 # debug
 npm-debug.log*

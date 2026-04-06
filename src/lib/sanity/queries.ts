@@ -1,5 +1,9 @@
 import { cacheLife, cacheTag } from 'next/cache'
 import { sanityClient } from './client'
+import {
+  FALLBACK_HERO_IMAGE_URL,
+  FALLBACK_PARALLAX_STRIP_URL,
+} from './placeholders'
 
 // --- Types ---
 
@@ -128,7 +132,7 @@ const PLACEHOLDER_PARALLAX_STRIPS: ParallaxStripData[] = [
     heightClass: 'h-[32vh] md:h-[40vh]',
   },
   {
-    image: { asset: { _ref: '', url: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1600' } },
+    image: { asset: { _ref: '', url: FALLBACK_PARALLAX_STRIP_URL } },
     altText: 'Mountain landscape at golden hour',
     variant: 'vertical',
     heightClass: 'h-[40vh] md:h-[50vh]',
@@ -139,7 +143,7 @@ const PLACEHOLDER_HOME_PAGE_CONTENT: HomePageContent = {
   heroImage: {
     asset: {
       _ref: '',
-      url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1800',
+      url: FALLBACK_HERO_IMAGE_URL,
     },
   },
   heroAltText: 'Hero background - car photography',
@@ -193,7 +197,7 @@ export async function getAbout(): Promise<AboutData> {
   cacheTag(ABOUT_TAG)
 
   const data = await sanityClient.fetch<AboutData>(
-    `*[_type == "about"][0] {
+    `*[_type == "about" && _id == "about"][0] {
       title,
       body,
       profileImageAlt,
@@ -209,7 +213,7 @@ export async function getHomePageContent(): Promise<HomePageContent> {
   cacheTag(HOME_PAGE_TAG)
 
   const data = await sanityClient.fetch<HomePageContent>(
-    `*[_type == "featuredWorkSection"][0] {
+    `*[_type == "featuredWorkSection" && _id == "featuredWorkSection"][0] {
       heroImage { asset, hotspot, crop },
       heroAltText,
       heroLabel,

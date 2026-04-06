@@ -5,9 +5,8 @@ import Link from 'next/link'
 import { m, useReducedMotion } from 'framer-motion'
 import { staticVariants } from '@/lib/motion'
 import { getImageUrl } from '@/lib/sanity/image'
+import { FALLBACK_ABOUT_IMAGE_URL } from '@/lib/sanity/placeholders'
 import type { AboutData } from '@/lib/sanity/queries'
-
-const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=800'
 const FALLBACK_PARAGRAPHS = [
   'Based in Vancouver, BC, I work across automotive, landscape, and street photography, drawn to the details that hold still long enough to mean something.',
   "When I'm not chasing golden hour on the Sea-to-Sky, I'm in the city looking for geometry in glass and concrete.",
@@ -52,7 +51,9 @@ function extractParagraphs(body: unknown[] | null) {
 export default function AboutSnippet({ about }: AboutSnippetProps) {
   const prefersReduced = useReducedMotion()
   const v = prefersReduced ? staticVariants : variants
-  const imageUrl = getImageUrl(about.profileImage, { width: 900, height: 675, quality: 85 }) ?? FALLBACK_IMAGE
+  const imageUrl =
+    getImageUrl(about.profileImage, { width: 900, height: 675, quality: 85 }) ??
+    FALLBACK_ABOUT_IMAGE_URL
   const imageAlt = about.profileImageAlt ?? 'Sahib Boparai - photographer'
   const title = about.title ?? 'Eye for the quiet moment'
   const paragraphs = extractParagraphs(about.body)

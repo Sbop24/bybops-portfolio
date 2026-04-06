@@ -4,9 +4,8 @@ import Image from 'next/image'
 import { m, useReducedMotion } from 'framer-motion'
 import { staticVariants } from '@/lib/motion'
 import { getImageUrl } from '@/lib/sanity/image'
+import { FALLBACK_HERO_IMAGE_URL } from '@/lib/sanity/placeholders'
 import type { HomePageContent } from '@/lib/sanity/queries'
-
-const HERO_IMAGE = 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1800'
 
 const labelVariants = {
   hidden: { opacity: 0 },
@@ -32,7 +31,8 @@ export default function HeroSection({ content }: HeroSectionProps) {
   const label = prefersReduced ? staticVariants : labelVariants
   const heading = prefersReduced ? staticVariants : headingVariants
   const arrow = prefersReduced ? staticVariants : arrowVariants
-  const heroImageUrl = getImageUrl(content.heroImage, { width: 1800, quality: 85 }) ?? HERO_IMAGE
+  const heroImageUrl =
+    getImageUrl(content.heroImage, { width: 1800, quality: 85 }) ?? FALLBACK_HERO_IMAGE_URL
   const heroAltText = content.heroAltText ?? 'Hero background - car photography'
   const heroLabel = content.heroLabel ?? 'Photography by Sahib Boparai'
   const heroHeadingLineOne = content.heroHeadingLineOne ?? 'Moments'

@@ -6,8 +6,7 @@ import { m, useReducedMotion } from 'framer-motion'
 import { staticVariants } from '@/lib/motion'
 import type { AboutData } from '@/lib/sanity/queries'
 import { getImageUrl } from '@/lib/sanity/image'
-
-const PLACEHOLDER_IMAGE = 'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=800'
+import { FALLBACK_ABOUT_IMAGE_URL } from '@/lib/sanity/placeholders'
 
 const FALLBACK_BODY = [
   {
@@ -109,7 +108,9 @@ export default function AboutContent({ data }: AboutContentProps) {
   const headV = prefersReduced ? staticVariants : headingVariants
   const blkV = prefersReduced ? staticVariants : blockVariants
 
-  const imageUrl = getImageUrl(data.profileImage, { width: 1200, height: 1600, quality: 85 }) ?? PLACEHOLDER_IMAGE
+  const imageUrl =
+    getImageUrl(data.profileImage, { width: 1200, height: 1600, quality: 85 }) ??
+    FALLBACK_ABOUT_IMAGE_URL
   const imageAlt = data.profileImageAlt ?? 'Sahib Boparai - photographer'
   const title = data.title ?? 'Eye for the quiet moment'
   const body = (data.body && data.body.length > 0 ? data.body : FALLBACK_BODY) as PortableTextBlock[]
