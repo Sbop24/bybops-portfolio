@@ -13,7 +13,8 @@ interface HomepageClientProps {
   photosByCategory: Record<string, Photo[]>
 }
 
-export default function HomepageClient({ photosByCategory }: HomepageClientProps) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default function HomepageClient({ homepage, photosByCategory }: HomepageClientProps) {
   const reducedMotion = useReducedMotion()
 
   useLayoutEffect(() => {
