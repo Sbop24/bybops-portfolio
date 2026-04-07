@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react'
 import { m, useReducedMotion } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { testimonials } from '@/lib/testimonials'
+import { HOMEPAGE_TESTIMONIALS as testimonials } from '@/lib/testimonials'
 import { SCROLL_STAGES } from '@/lib/homepage-data'
 
 const containerVariants = {
