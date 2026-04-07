@@ -34,6 +34,7 @@ export default function CategoryReveal({
       <section
         ref={sectionRef}
         data-category={category}
+        id={`category-${category.toLowerCase()}`}
         className="min-h-screen flex items-center justify-center px-6"
       >
         <button
@@ -75,11 +76,11 @@ export default function CategoryReveal({
       <div
         ref={frameRef}
         data-frame={category}
-        className="relative overflow-hidden cursor-pointer group"
+        className="relative overflow-hidden cursor-pointer group active:scale-[0.98] transition-transform"
         style={{
           width: '40%',
           height: '50vh',
-          boxShadow: 'inset 0 0 0 1px rgba(200, 164, 78, 0.2)',
+          boxShadow: 'inset 0 0 20px rgba(200, 164, 78, 0.15), inset 0 0 0 1px rgba(200, 164, 78, 0.3)',
         }}
         onClick={onExpand}
         role="button"
@@ -91,13 +92,15 @@ export default function CategoryReveal({
       >
         {/* Category photo */}
         {imageUrl && (
-          <Image
-            src={imageUrl}
-            alt={photo.altText ?? label}
-            fill
-            sizes="(max-width: 768px) 100vw, 90vw"
-            className="object-cover scale-[1.15] group-hover:scale-[1.05] transition-transform duration-700"
-          />
+          <div aria-hidden="true" className="absolute inset-0">
+            <Image
+              src={imageUrl}
+              alt={photo.altText ?? label}
+              fill
+              sizes="(max-width: 768px) 100vw, 90vw"
+              className="object-cover scale-[1.15] group-hover:scale-[1.05] transition-transform duration-700"
+            />
+          </div>
         )}
 
         {/* Dark overlay */}

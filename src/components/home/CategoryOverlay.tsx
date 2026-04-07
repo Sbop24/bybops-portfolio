@@ -24,11 +24,16 @@ export default function CategoryOverlay({ category, photo, onClose }: CategoryOv
     }
     if (category) {
       document.addEventListener('keydown', onKey)
-      // Focus close button for accessibility
-      setTimeout(() => closeButtonRef.current?.focus(), 50)
     }
     return () => document.removeEventListener('keydown', onKey)
   }, [category, onClose])
+
+  // Focus close button when overlay opens
+  useEffect(() => {
+    if (category) {
+      closeButtonRef.current?.focus()
+    }
+  }, [category])
 
   // Prevent body scroll when open
   useEffect(() => {
@@ -40,6 +45,17 @@ export default function CategoryOverlay({ category, photo, onClose }: CategoryOv
     return () => {
       document.body.style.overflow = ''
     }
+  }, [category])
+
+  // Focus trap — inert main content when overlay is open
+  useEffect(() => {
+    const main = document.querySelector('main')
+    if (category) {
+      main?.setAttribute('inert', '')
+    } else {
+      main?.removeAttribute('inert')
+    }
+    return () => { main?.removeAttribute('inert') }
   }, [category])
 
   const copy = category ? CATEGORY_COPY[category] : null
@@ -60,7 +76,7 @@ export default function CategoryOverlay({ category, photo, onClose }: CategoryOv
         >
           {/* Backdrop */}
           <div
-            className="absolute inset-0 bg-black/95 backdrop-blur-sm"
+            className="absolute inset-0 bg-base/90 backdrop-blur-sm"
             onClick={onClose}
             aria-hidden="true"
           />
