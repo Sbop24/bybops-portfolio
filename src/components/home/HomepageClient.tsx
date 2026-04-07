@@ -55,6 +55,9 @@ export default function HomepageClient({ homepage, photosByCategory }: HomepageC
     if (typeof window !== 'undefined' && window.innerWidth >= 768) {
       // Document-scoped context so category frames (outside monitorRef) are reachable
       const ctx = gsap.context(() => {
+        // Set initial state — monitor starts small / distant
+        gsap.set('#monitor-wrapper', { scale: 0.62, transformOrigin: 'center center' })
+
         // Monitor zoom timeline
         const monitorTl = gsap.timeline({
           scrollTrigger: {
@@ -70,18 +73,18 @@ export default function HomepageClient({ homepage, photosByCategory }: HomepageC
           .to('#monitor-wrapper', {
             scale: 1,
             duration: 1,
-            ease: 'power1.out',
-          }, 0.35)
+            ease: 'power2.inOut',
+          }, 0)
           .to('.monitor-bezel, .monitor-stand, .monitor-glow', {
             opacity: 0,
-            duration: 0.4,
-            ease: 'none',
-          }, 0.35)
+            duration: 0.3,
+            ease: 'power1.in',
+          }, 0.68)
           .to('.monitor-bezel', {
             borderRadius: 0,
-            duration: 0.3,
+            duration: 0.25,
             ease: 'none',
-          }, 0.7)
+          }, 0.75)
 
         // Category expanding frames
         const activeCategories = CATEGORY_ORDER.filter(
@@ -218,15 +221,14 @@ export default function HomepageClient({ homepage, photosByCategory }: HomepageC
 
   return (
     <main>
-      {/* Monitor section — pinned, GSAP zoom */}
+      {/* Monitor section — GSAP pins this entire section; inner wrapper must NOT be sticky */}
       <section
         id="monitor-section"
-        className="min-h-screen"
+        className="min-h-[100dvh]"
       >
         <div
           id="monitor-wrapper"
-          className="h-screen flex items-center justify-center overflow-visible"
-          style={{ transformOrigin: 'center center', transform: 'scale(0.72)' }}
+          className="h-[100dvh] flex items-center justify-center"
         >
           <MonitorFrame ref={monitorRef}>
             {heroScreenContent}
