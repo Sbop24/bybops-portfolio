@@ -1,9 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useScroll, useMotionValueEvent, m, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 
 const links = [
   { href: '/gallery', label: 'Gallery' },
@@ -12,15 +12,25 @@ const links = [
 ]
 
 export default function Nav() {
-  const { scrollY } = useScroll()
   const pathname = usePathname()
   const isHome = pathname === '/'
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
-  useMotionValueEvent(scrollY, 'change', (y) => {
-    setScrolled(y > 60)
-  })
+  useEffect(() => {
+    let ticking = false
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 60)
+          ticking = false
+        })
+        ticking = true
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   const solid = !isHome || scrolled
   const navBg = solid ? 'bg-base/95 backdrop-blur-md border-b border-border' : 'bg-transparent'
