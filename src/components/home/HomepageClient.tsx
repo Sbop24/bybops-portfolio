@@ -68,9 +68,9 @@ export default function HomepageClient({ homepage, photosByCategory }: HomepageC
 
         monitorTl
           .to('#monitor-wrapper', {
-            scale: 3.5,
+            scale: 1,
             duration: 1,
-            ease: 'none',
+            ease: 'power1.out',
           }, 0.35)
           .to('.monitor-bezel, .monitor-stand, .monitor-glow', {
             opacity: 0,
@@ -226,6 +226,7 @@ export default function HomepageClient({ homepage, photosByCategory }: HomepageC
         <div
           id="monitor-wrapper"
           className="sticky top-0 h-screen flex items-center justify-center overflow-hidden"
+          style={{ transformOrigin: 'center center', transform: 'scale(0.72)' }}
         >
           <MonitorFrame ref={monitorRef}>
             {heroScreenContent}

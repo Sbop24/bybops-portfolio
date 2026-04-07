@@ -18,11 +18,12 @@ const MonitorFrame = forwardRef<HTMLDivElement, MonitorFrameProps>(
 
         {/* Monitor body */}
         <div
-          className="monitor-bezel relative w-[95vw] md:w-[85vw] max-w-[1200px] rounded-lg overflow-hidden"
+          className="monitor-bezel relative w-[80vw] md:w-[70vw] max-w-[1000px] rounded-3xl overflow-hidden"
           style={{
             aspectRatio: '16/10',
             border: '2px solid #2A2A2A',
             background: '#111',
+            boxShadow: '0 30px 80px rgba(0,0,0,0.45)',
           }}
         >
           {/* Top bezel */}
