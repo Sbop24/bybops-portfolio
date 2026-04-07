@@ -8,55 +8,153 @@ interface MonitorFrameProps {
 const MonitorFrame = forwardRef<HTMLDivElement, MonitorFrameProps>(
   function MonitorFrame({ children }, ref) {
     return (
-      <div ref={ref} className="relative flex flex-col items-center">
-        {/* Gold glow behind monitor */}
+      <div
+        ref={ref}
+        className="relative"
+        style={{
+          perspective: '1200px',
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        {/* 3D Monitor container */}
         <div
-          aria-hidden="true"
-          className="monitor-glow absolute inset-0 -z-10 blur-3xl opacity-20"
-          style={{ background: 'radial-gradient(ellipse at center, #C8A44E 0%, transparent 70%)' }}
-        />
-
-        {/* Monitor body */}
-        <div
-          className="monitor-bezel relative w-[80vw] md:w-[70vw] max-w-[1000px] rounded-3xl overflow-hidden"
+          className="monitor-bezel relative"
           style={{
+            width: 'clamp(280px, 80vw, 1100px)',
             aspectRatio: '16/10',
-            border: '2px solid #2A2A2A',
-            background: '#111',
-            boxShadow: '0 30px 80px rgba(0,0,0,0.45)',
+            transformStyle: 'preserve-3d',
+            transform: 'rotateX(8deg) rotateY(-2deg)',
+            background: '#0a0a0a',
+            borderRadius: '24px',
+            border: '8px solid #1a1a1a',
+            boxShadow: `
+              0 0 60px rgba(200, 164, 78, 0.08),
+              0 60px 120px rgba(0, 0, 0, 0.7),
+              inset -1px -1px 2px rgba(255, 255, 255, 0.03),
+              inset 1px 1px 2px rgba(0, 0, 0, 0.5)
+            `,
+            overflow: 'hidden',
           }}
         >
-          {/* Top bezel */}
-          <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#1a1a1a]" aria-hidden="true" />
+          {/* Inner screen glow */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-6 rounded-xl pointer-events-none"
+            style={{
+              boxShadow: 'inset 0 0 40px rgba(200, 164, 78, 0.08)',
+            }}
+          />
 
-          {/* Screen area — hero content and HUD render here */}
+          {/* Screen content */}
           <div className="absolute inset-0">
             {children}
           </div>
 
-          {/* Bottom chin */}
-          <div className="absolute bottom-0 left-0 right-0 h-[18px] bg-[#1a1a1a] flex items-center justify-center" aria-hidden="true">
-            <div className="w-6 h-1 rounded-full bg-[#2a2a2a]" />
-          </div>
-        </div>
-
-        {/* Stand — narrow neck + wider base */}
-        <div className="monitor-stand hidden md:flex flex-col items-center" aria-hidden="true">
+          {/* Top trim */}
           <div
-            className="w-12 h-10"
-            style={{ background: 'linear-gradient(to bottom, #1a1a1a, #222)' }}
-          />
-          <div
-            className="w-40 h-3 rounded-sm"
-            style={{ background: 'linear-gradient(to bottom, #222, #1a1a1a)', boxShadow: '0 4px 12px rgba(0,0,0,0.5)' }}
+            aria-hidden="true"
+            className="monitor-glow absolute top-0 left-0 right-0 h-[2px]"
+            style={{
+              background: 'linear-gradient(90deg, transparent, #C8A44E/20, transparent)',
+            }}
           />
         </div>
 
-        {/* Desk reflection */}
+        {/* Stand assembly */}
         <div
           aria-hidden="true"
-          className="w-80 h-6 opacity-10 blur-xl"
-          style={{ background: 'radial-gradient(ellipse at center, #C8A44E 0%, transparent 70%)' }}
+          className="monitor-stand absolute hidden md:flex flex-col items-center"
+          style={{
+            bottom: '-80px',
+            transformStyle: 'preserve-3d',
+            transform: 'translateZ(40px)',
+          }}
+        >
+          {/* Neck connecting monitor to base */}
+          <div
+            style={{
+              width: '60px',
+              height: '45px',
+              background: 'linear-gradient(90deg, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%)',
+              borderRadius: '6px',
+              boxShadow: '0 -4px 16px rgba(0,0,0,0.4), inset -1px 0 8px rgba(255,255,255,0.05)',
+              position: 'relative',
+            }}
+          >
+            {/* Neck highlight */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '2px',
+                left: '50%',
+                width: '40%',
+                height: '2px',
+                background: 'rgba(255,255,255,0.08)',
+                borderRadius: '1px',
+                transform: 'translateX(-50%)',
+              }}
+            />
+          </div>
+
+          {/* Base — wider, metallic */}
+          <div
+            style={{
+              width: '280px',
+              height: '20px',
+              background: 'linear-gradient(180deg, #252525 0%, #1a1a1a 50%, #0f0f0f 100%)',
+              borderRadius: '4px 4px 0 0',
+              boxShadow: `
+                0 4px 24px rgba(0,0,0,0.6),
+                inset 0 1px 2px rgba(255,255,255,0.1),
+                0 -2px 8px rgba(200, 164, 78, 0.06)
+              `,
+              position: 'relative',
+            }}
+          >
+            {/* Base rim */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '0',
+                left: '0',
+                right: '0',
+                height: '1px',
+                background: 'linear-gradient(90deg, transparent, rgba(200,164,78,0.2), transparent)',
+              }}
+            />
+          </div>
+
+          {/* Desk shadow beneath stand */}
+          <div
+            style={{
+              position: 'absolute',
+              bottom: '-15px',
+              width: '350px',
+              height: '30px',
+              background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.3), transparent 70%)',
+              borderRadius: '50%',
+              filter: 'blur(12px)',
+              zIndex: -1,
+            }}
+          />
+        </div>
+
+        {/* Ambient glow behind monitor */}
+        <div
+          aria-hidden="true"
+          className="monitor-glow absolute -z-20"
+          style={{
+            width: '600px',
+            height: '400px',
+            background: 'radial-gradient(ellipse at center, rgba(200,164,78,0.12), transparent 60%)',
+            borderRadius: '50%',
+            filter: 'blur(40px)',
+            pointerEvents: 'none',
+          }}
         />
       </div>
     )

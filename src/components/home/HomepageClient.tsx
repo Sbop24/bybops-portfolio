@@ -225,7 +225,7 @@ export default function HomepageClient({ homepage, photosByCategory }: HomepageC
       >
         <div
           id="monitor-wrapper"
-          className="sticky top-0 h-screen flex items-center justify-center overflow-hidden"
+          className="h-screen flex items-center justify-center overflow-visible"
           style={{ transformOrigin: 'center center', transform: 'scale(0.72)' }}
         >
           <MonitorFrame ref={monitorRef}>
