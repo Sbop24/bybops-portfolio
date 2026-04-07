@@ -13,6 +13,8 @@ import MonitorFrame from './MonitorFrame'
 import HUDMenu from './HUDMenu'
 import CategoryReveal from './CategoryReveal'
 import CategoryOverlay from './CategoryOverlay'
+import TestimonialsSection from './TestimonialsSection'
+import BookingSection from './BookingSection'
 
 // Register GSAP ScrollTrigger plugin at module level to avoid SSR warnings
 gsap.registerPlugin(ScrollTrigger)
@@ -201,13 +203,9 @@ export default function HomepageClient({ homepage, photosByCategory }: HomepageC
           ))}
         </div>
 
-        <section className="min-h-screen flex items-center justify-center">
-          <p>Testimonials section</p>
-        </section>
+        <TestimonialsSection />
 
-        <section className="min-h-screen flex items-center justify-center">
-          <p>Booking section</p>
-        </section>
+        <BookingSection />
 
         <CategoryOverlay
           category={overlayCategory as CategoryKey | null}
@@ -251,13 +249,9 @@ export default function HomepageClient({ homepage, photosByCategory }: HomepageC
         ))}
       </div>
 
-      <section className="min-h-screen">
-        {/* testimonials stub */}
-      </section>
+      <TestimonialsSection />
 
-      <section className="min-h-screen">
-        {/* booking stub */}
-      </section>
+      <BookingSection />
 
       <CategoryOverlay
         category={overlayCategory as CategoryKey | null}
