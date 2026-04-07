@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="en"
       className={`${GeistSans.variable} ${GeistMono.variable} ${cormorant.variable} h-full antialiased bg-base`}
     >
-      <body className="min-h-full flex flex-col text-text-primary">
+      <body className="min-h-full flex flex-col text-text-primary" suppressHydrationWarning>
         <MotionProvider>
           <Nav />
           <PageTransition>{children}</PageTransition>
