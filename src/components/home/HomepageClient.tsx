@@ -23,6 +23,7 @@ interface HomepageClientProps {
 export default function HomepageClient({ homepage, photosByCategory }: HomepageClientProps) {
   const reducedMotion = useReducedMotion()
   const monitorRef = useRef<HTMLDivElement>(null)
+  const ctxRef = useRef<ReturnType<typeof gsap.context> | null>(null)
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(0)
 
   useEffect(() => {
@@ -30,45 +31,49 @@ export default function HomepageClient({ homepage, photosByCategory }: HomepageC
 
     const lenis = new Lenis()
 
-    const lenisRafCallback = (time: number) => lenis.raf(time * 1000)
+    const lenisRafCallback = (time: number) => lenis.raf(time)
 
     lenis.on('scroll', ScrollTrigger.update)
     gsap.ticker.add(lenisRafCallback)
 
     if (typeof window !== 'undefined' && window.innerWidth >= 768) {
-      // Monitor zoom timeline
-      const monitorTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: '#monitor-section',
-          start: 'top top',
-          end: `+=${SCROLL_STAGES.monitor}`,
-          pin: true,
-          scrub: 1,
-        },
-      })
+      const ctx = gsap.context(() => {
+        // Monitor zoom timeline
+        const monitorTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '#monitor-section',
+            start: 'top top',
+            end: `+=${SCROLL_STAGES.monitor}`,
+            pin: true,
+            scrub: 1,
+          },
+        })
 
-      monitorTl
-        .to('#monitor-wrapper', {
-          scale: 3.5,
-          duration: 1,
-          ease: 'none',
-        }, 0.35)
-        .to('.monitor-bezel, .monitor-stand, .monitor-glow', {
-          opacity: 0,
-          duration: 0.4,
-          ease: 'none',
-        }, 0.35)
-        .to('.monitor-screen', {
-          borderRadius: 0,
-          duration: 0.3,
-          ease: 'none',
-        }, 0.7)
+        monitorTl
+          .to('#monitor-wrapper', {
+            scale: 3.5,
+            duration: 1,
+            ease: 'none',
+          }, 0.35)
+          .to('.monitor-bezel, .monitor-stand, .monitor-glow', {
+            opacity: 0,
+            duration: 0.4,
+            ease: 'none',
+          }, 0.35)
+          .to('.monitor-bezel', {
+            borderRadius: 0,
+            duration: 0.3,
+            ease: 'none',
+          }, 0.7)
+      }, monitorRef)
+
+      ctxRef.current = ctx
     }
 
     return () => {
       lenis.destroy()
       gsap.ticker.remove(lenisRafCallback)
-      ScrollTrigger.getAll().forEach((st) => st.kill())
+      ctxRef.current?.revert()
     }
   }, [reducedMotion])
 
@@ -91,6 +96,8 @@ export default function HomepageClient({ homepage, photosByCategory }: HomepageC
           priority
           sizes="(max-width: 768px) 95vw, 85vw"
           className="object-cover"
+          placeholder="blur"
+          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAACf/EABQQAQAAAAAAAAAAAAAAAAAAAAD/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AJQAB/9k="
           onLoad={() => {
             if (typeof window !== 'undefined') {
               import('gsap/ScrollTrigger').then(({ ScrollTrigger: ST }) => {

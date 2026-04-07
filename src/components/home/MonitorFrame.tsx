@@ -29,7 +29,7 @@ const MonitorFrame = forwardRef<HTMLDivElement, MonitorFrameProps>(
           <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#1a1a1a]" aria-hidden="true" />
 
           {/* Screen area — hero content and HUD render here */}
-          <div className="monitor-screen absolute inset-0">
+          <div className="absolute inset-0">
             {children}
           </div>
 
