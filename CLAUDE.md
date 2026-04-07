@@ -76,3 +76,5 @@
 | 2026-04-06 | Homepage CMS drift reduced further, explicit content ordering added, singleton/fallback cleanup completed, and local ignore rules hardened. |
 | 2026-04-06 | ByBops logo black-screen regression fixed. `PageTransition` is now intentionally a no-op after the previous route wrapper caused hidden-screen behavior on live navigation. |
 | 2026-04-06 | Current live priorities are deployment alignment for `bybops.ca`, security-warning diagnosis, and browser-level verification before redesign work. |
+| 2026-04-07 | Homepage redesign continuation completed through monitor intro, category flow, testimonials, and booking sequence. Scroll architecture was corrected by removing nested sticky inside GSAP pin and moving initial monitor scale into GSAP state. |
+| 2026-04-07 | Realistic monitor shell pass completed: flex-column stand/base layout to prevent clipping, dark-room cinematic styling, and checkpoint handoff captured in HANDOFF_2026-04-07_BREAK.md for pause-safe resume. |

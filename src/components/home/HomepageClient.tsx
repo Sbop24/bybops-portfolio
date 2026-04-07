@@ -30,7 +30,7 @@ export default function HomepageClient({ homepage, photosByCategory }: HomepageC
   const ctxRef = useRef<ReturnType<typeof gsap.context> | null>(null)
   const lenisRef = useRef<Lenis | null>(null)
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(0)
-  const [overlayCategory, setOverlayCategory] = useState<string | null>(null)
+  const [overlayCategory, setOverlayCategory] = useState<CategoryKey | null>(null)
 
   // Pause/resume Lenis when overlay opens or closes
   useEffect(() => {
@@ -106,8 +106,7 @@ export default function HomepageClient({ homepage, photosByCategory }: HomepageC
           }).fromTo(
             frame,
             { width: '40%', height: '50vh' },
-            { width: '92%', height: '88vh', duration: 1, ease: 'none' },
-            0.25
+            { width: '92%', height: '88vh', duration: 1, ease: 'none' }
           )
         })
       })
@@ -211,7 +210,7 @@ export default function HomepageClient({ homepage, photosByCategory }: HomepageC
         <BookingSection />
 
         <CategoryOverlay
-          category={overlayCategory as CategoryKey | null}
+          category={overlayCategory}
           photo={overlayPhoto}
           onClose={() => setOverlayCategory(null)}
         />
@@ -257,7 +256,7 @@ export default function HomepageClient({ homepage, photosByCategory }: HomepageC
       <BookingSection />
 
       <CategoryOverlay
-        category={overlayCategory as CategoryKey | null}
+        category={overlayCategory}
         photo={overlayPhoto}
         onClose={() => setOverlayCategory(null)}
       />
