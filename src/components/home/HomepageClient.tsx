@@ -1,12 +1,15 @@
 'use client'
 
-import { useEffect, useLayoutEffect } from 'react'
+import { useEffect } from 'react'
 import { useReducedMotion } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Lenis from 'lenis'
 import { CATEGORY_ORDER } from '@/lib/homepage-data'
 import type { HomePageContent, Photo } from '@/lib/sanity/queries'
+
+// Register GSAP ScrollTrigger plugin at module level to avoid SSR warnings
+gsap.registerPlugin(ScrollTrigger)
 
 interface HomepageClientProps {
   homepage: HomePageContent
@@ -16,10 +19,6 @@ interface HomepageClientProps {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function HomepageClient({ homepage, photosByCategory }: HomepageClientProps) {
   const reducedMotion = useReducedMotion()
-
-  useLayoutEffect(() => {
-    gsap.registerPlugin(ScrollTrigger)
-  }, [])
 
   useEffect(() => {
     if (reducedMotion) return
