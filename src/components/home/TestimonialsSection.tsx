@@ -83,7 +83,7 @@ export default function TestimonialsSection() {
                 variants={variants}
                 className="font-display text-2xl md:text-4xl text-text-primary leading-relaxed mb-8"
               >
-                "{testimonial.quote}"
+                &ldquo;{testimonial.quote}&rdquo;
               </m.blockquote>
 
               <m.cite
