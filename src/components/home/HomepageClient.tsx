@@ -6,11 +6,13 @@ import Image from 'next/image'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Lenis from 'lenis'
-import { CATEGORY_ORDER, HERO_COPY, SCROLL_STAGES } from '@/lib/homepage-data'
+import { CATEGORY_ORDER, HERO_COPY, SCROLL_STAGES, type CategoryKey } from '@/lib/homepage-data'
 import { getImageUrl } from '@/lib/sanity/image'
 import type { HomePageContent, Photo } from '@/lib/sanity/queries'
 import MonitorFrame from './MonitorFrame'
 import HUDMenu from './HUDMenu'
+import CategoryReveal from './CategoryReveal'
+import CategoryOverlay from './CategoryOverlay'
 
 // Register GSAP ScrollTrigger plugin at module level to avoid SSR warnings
 gsap.registerPlugin(ScrollTrigger)
@@ -24,12 +26,24 @@ export default function HomepageClient({ homepage, photosByCategory }: HomepageC
   const reducedMotion = useReducedMotion()
   const monitorRef = useRef<HTMLDivElement>(null)
   const ctxRef = useRef<ReturnType<typeof gsap.context> | null>(null)
+  const lenisRef = useRef<Lenis | null>(null)
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(0)
+  const [overlayCategory, setOverlayCategory] = useState<string | null>(null)
+
+  // Pause/resume Lenis when overlay opens or closes
+  useEffect(() => {
+    if (overlayCategory) {
+      lenisRef.current?.stop()
+    } else {
+      lenisRef.current?.start()
+    }
+  }, [overlayCategory])
 
   useEffect(() => {
     if (reducedMotion) return
 
     const lenis = new Lenis()
+    lenisRef.current = lenis
 
     const lenisRafCallback = (time: number) => lenis.raf(time)
 
@@ -37,6 +51,7 @@ export default function HomepageClient({ homepage, photosByCategory }: HomepageC
     gsap.ticker.add(lenisRafCallback)
 
     if (typeof window !== 'undefined' && window.innerWidth >= 768) {
+      // Document-scoped context so category frames (outside monitorRef) are reachable
       const ctx = gsap.context(() => {
         // Monitor zoom timeline
         const monitorTl = gsap.timeline({
@@ -65,17 +80,43 @@ export default function HomepageClient({ homepage, photosByCategory }: HomepageC
             duration: 0.3,
             ease: 'none',
           }, 0.7)
-      }, monitorRef)
+
+        // Category expanding frames
+        const activeCategories = CATEGORY_ORDER.filter(
+          (cat) => (photosByCategory[cat] ?? []).length > 0
+        )
+
+        activeCategories.forEach((cat) => {
+          const frame = document.querySelector(`[data-frame="${cat}"]`)
+          if (!frame) return
+
+          gsap.timeline({
+            scrollTrigger: {
+              trigger: `#category-${cat.toLowerCase()}`,
+              start: 'top top',
+              end: `+=${SCROLL_STAGES.categoryEach}`,
+              pin: true,
+              scrub: 1,
+            },
+          }).fromTo(
+            frame,
+            { width: '40%', height: '50vh' },
+            { width: '92%', height: '88vh', duration: 1, ease: 'none' },
+            0.25
+          )
+        })
+      })
 
       ctxRef.current = ctx
     }
 
     return () => {
       lenis.destroy()
+      lenisRef.current = null
       gsap.ticker.remove(lenisRafCallback)
       ctxRef.current?.revert()
     }
-  }, [reducedMotion])
+  }, [reducedMotion, photosByCategory])
 
   // Suppress unused warning — will be used when category scroll tracking is wired up
   void setActiveCategoryIndex
@@ -83,6 +124,10 @@ export default function HomepageClient({ homepage, photosByCategory }: HomepageC
   const activeCategories = CATEGORY_ORDER.filter(
     (cat) => (photosByCategory[cat] ?? []).length > 0
   )
+
+  const overlayPhoto = overlayCategory
+    ? (photosByCategory[overlayCategory]?.[0] ?? null)
+    : null
 
   const heroImageUrl = getImageUrl(homepage.heroImage)
 
@@ -143,14 +188,18 @@ export default function HomepageClient({ homepage, photosByCategory }: HomepageC
           </MonitorFrame>
         </section>
 
-        {activeCategories.map((cat) => (
-          <section
-            key={cat}
-            className="min-h-screen flex items-center justify-center"
-          >
-            <p>{cat} — category section</p>
-          </section>
-        ))}
+        <div id="categories-section-reduced">
+          {activeCategories.map((cat, i) => (
+            <CategoryReveal
+              key={cat}
+              category={cat}
+              index={i}
+              photo={photosByCategory[cat][0]}
+              onExpand={() => setOverlayCategory(cat)}
+              reducedMotion={true}
+            />
+          ))}
+        </div>
 
         <section className="min-h-screen flex items-center justify-center">
           <p>Testimonials section</p>
@@ -159,6 +208,12 @@ export default function HomepageClient({ homepage, photosByCategory }: HomepageC
         <section className="min-h-screen flex items-center justify-center">
           <p>Booking section</p>
         </section>
+
+        <CategoryOverlay
+          category={overlayCategory as CategoryKey | null}
+          photo={overlayPhoto}
+          onClose={() => setOverlayCategory(null)}
+        />
       </main>
     )
   }
@@ -182,15 +237,19 @@ export default function HomepageClient({ homepage, photosByCategory }: HomepageC
         </div>
       </section>
 
-      <div id="categories-section" />
-      {activeCategories.map((cat) => (
-        <section
-          key={cat}
-          className="min-h-screen"
-        >
-          {/* {cat} category stub */}
-        </section>
-      ))}
+      {/* Categories section */}
+      <div id="categories-section">
+        {activeCategories.map((cat, i) => (
+          <CategoryReveal
+            key={cat}
+            category={cat}
+            index={i}
+            photo={photosByCategory[cat][0]}
+            onExpand={() => setOverlayCategory(cat)}
+            reducedMotion={false}
+          />
+        ))}
+      </div>
 
       <section className="min-h-screen">
         {/* testimonials stub */}
@@ -199,6 +258,12 @@ export default function HomepageClient({ homepage, photosByCategory }: HomepageC
       <section className="min-h-screen">
         {/* booking stub */}
       </section>
+
+      <CategoryOverlay
+        category={overlayCategory as CategoryKey | null}
+        photo={overlayPhoto}
+        onClose={() => setOverlayCategory(null)}
+      />
     </main>
   )
 }
